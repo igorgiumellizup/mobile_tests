@@ -1,1 +1,0 @@
-C:\workspaces\mobileTests\build\classes\kotlin\main\temp\Main.class;C:\workspaces\mobileTests\build\classes\kotlin\main\temp\Object.class

@@ -93,7 +93,7 @@ object SuiteSetup {
 
     fun closeDriver() {
         try {
-            driver?.closeApp();
+            driver?.resetApp();
             //driver?.quit();
         } catch (e: Exception) {
             // e.printStackTrace();

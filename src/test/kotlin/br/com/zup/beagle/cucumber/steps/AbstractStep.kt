@@ -46,12 +46,12 @@ abstract class AbstractStep {
     }
 
     fun checkScreenContainsElementWithText(text: String?): Boolean {
-        return AppiumUtil.elementExists(driver, By.xpath("//*[contains(@text,'$text')]"), 1000)
+        return AppiumUtil.elementExists(getDriver(), By.xpath("//*[contains(@text,'$text')]"), 1000)
     }
 
     fun clickOnElementWithText(text: String?) {
         AppiumUtil.waitForElementToBeClickable(
-            driver,
+            getDriver(),
             By.xpath("//*[contains(@text,'$text')]"),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
@@ -61,7 +61,7 @@ abstract class AbstractStep {
 
     fun clickOnElementWithHint(hintText: String?) {
         AppiumUtil.waitForElementToBeClickable(
-            driver,
+            getDriver(),
             By.xpath("//*[contains(@hint,'$hintText')]"),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
@@ -71,7 +71,7 @@ abstract class AbstractStep {
 
     fun scrollToElementWithText(text: String?): MobileElement {
         var element: MobileElement = AppiumUtil.waitForPresenceOfElement(
-            driver,
+            getDriver(),
             By.xpath("//*[contains(@text,'$text')]"),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
@@ -85,7 +85,7 @@ abstract class AbstractStep {
     }
 
     fun hideKeyboard() {
-        driver?.hideKeyboard()
+        getDriver()?.hideKeyboard()
     }
 
 
