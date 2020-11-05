@@ -29,15 +29,15 @@ class MainScreen(mobileDriver: AppiumDriver<*>?) : AbstractScreen(mobileDriver) 
 
     @iOSXCUITFindBy(accessibility = "TODO")
     @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/MainScreenLabel")
-    private lateinit var labelElement: MobileElement
+    public lateinit var labelElement: MobileElement
 
     @iOSXCUITFindBy(accessibility = "TODO")
     @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/TextBffUrl")
-    private lateinit var bffInputTextFieldElement: MobileElement
+    public lateinit var bffInputTextFieldElement: MobileElement
 
     @iOSXCUITFindBy(accessibility = "TODO")
     @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/SendBffRequestButton")
-    private lateinit var sendBffRequestButtonElement: MobileElement
+    public lateinit var sendBffRequestButtonElement: MobileElement
 
     override fun <T : AbstractScreen> waitForScreenToLoad(): T {
         waitForScreenToLoad(arrayOf(labelElement, bffInputTextFieldElement, sendBffRequestButtonElement))
