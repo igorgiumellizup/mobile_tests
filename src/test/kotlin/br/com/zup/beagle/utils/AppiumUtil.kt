@@ -206,4 +206,18 @@ object AppiumUtil {
             return@ExpectedCondition false
         })
     }
+
+    /**
+     * returns true if element1 is above element2
+     */
+    @Synchronized
+    fun isElementAboveElement(element1: MobileElement, element2: MobileElement): Boolean{
+        var element1LocationY: Int = element1.location.y + element1.size.height
+        var element2LocationY: Int = element2.location.y
+
+        if (element2LocationY > element1LocationY)
+            return true
+        
+        return false
+    }
 }

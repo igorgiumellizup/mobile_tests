@@ -18,6 +18,7 @@ package br.com.zup.beagle.cucumber.steps
 
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.Assert
 
 
 class GenericSteps : AbstractStep() {
@@ -26,42 +27,38 @@ class GenericSteps : AbstractStep() {
 
     @When("^I click on button (.*)$")
     fun clickOnButton(string1: String?) {
-        //ScreenRobot()
-        //    .clickOnText(string1)
-        clickOnElementWithText(string1)
+        //ScreenRobot().clickOnText(string1)
+        clickOnElementWithText(string1, false)
 
     }
 
     @When("^Scroll to (.*)$")
     fun scrollTo(string1: String?) {
         //ScreenRobot().scrollTo(string1)
-        scrollToElementWithText(string1)
+        scrollToElementWithText(string1, false)
     }
 
     @Then("^The Text should show (.*)$")
     fun textShouldShow(string1: String?) {
         //ScreenRobot().checkViewContainsText(string1)
-        checkScreenContainsElementWithText(string1)
+        Assert.assertTrue(screenContainsElementWithText(string1, false))
     }
 
     @When("^I click on text (.*)$")
     fun clickOnText(string1: String?) {
-        //ScreenRobot()
-        //   .clickOnText(string1)
-        clickOnElementWithText(string1)
+        //ScreenRobot().clickOnText(string1)
+        clickOnElementWithText(string1, false)
     }
 
     @When("^I click on input with hint (.*)$")
     fun clickOnInputWithHint(hint: String?) {
-        //ScreenRobot()
-        //   .clickOnInputWithHint(hint)
-        clickOnElementWithHint(hint)
+        //ScreenRobot().clickOnInputWithHint(hint)
+        clickOnElementWithHint(hint, false)
     }
 
     @When("hide keyboard")
     fun hideKeyboardStep() {
-        //ScreenRobot()
-        //  .hideKeyboard()
+        //ScreenRobot().hideKeyboard()
         hideKeyboard()
     }
 }

@@ -45,47 +45,112 @@ abstract class AbstractStep {
         mainScreen.clickOnGoButton()
     }
 
-    fun checkScreenContainsElementWithText(text: String?): Boolean {
-        return AppiumUtil.elementExists(getDriver(), By.xpath("//*[contains(@text,'$text')]"), 1000)
+    private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean): By {
+        var xpath: By
+        if (likeSearch)
+            xpath = By.xpath("//*[contains(@text,'$elementText')]")
+        else
+            xpath = By.xpath("//*[@text='$elementText']")
+
+        return xpath
     }
 
-    fun clickOnElementWithText(text: String?) {
+    private fun getSearchByHintXpath(elementHint: String?, likeSearch: Boolean): By {
+        var xpath: By
+        if (likeSearch)
+            xpath = By.xpath("//*[contains(@hint,'$elementHint')]")
+        else
+            xpath = By.xpath("//*[@hint='$elementHint']")
+
+        return xpath
+    }
+
+    protected fun waitForElementToBeClickable(elementText: String?, likeSearch: Boolean): MobileElement {
+        var xpath: By = getSearchByTextXpath(elementText, likeSearch)
+        return AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            xpath,
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
+            0
+        )
+
+    }
+
+    protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean): Boolean {
+        var xpath: By = getSearchByTextXpath(elementText, likeSearch)
+        return AppiumUtil.elementExists(getDriver(), xpath, 1000)
+    }
+
+    protected fun clickOnElementWithText(elementText: String?, likeSearch: Boolean) {
+        waitForElementToBeClickable(elementText, likeSearch).click()
+
+    }
+
+    protected fun clickOnElementWithHint(hintText: String?, likeSearch: Boolean) {
         AppiumUtil.waitForElementToBeClickable(
             getDriver(),
-            By.xpath("//*[contains(@text,'$text')]"),
+            getSearchByHintXpath(hintText, likeSearch),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
         ).click()
 
     }
 
-    fun clickOnElementWithHint(hintText: String?) {
-        AppiumUtil.waitForElementToBeClickable(
-            getDriver(),
-            By.xpath("//*[contains(@hint,'$hintText')]"),
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
-            0
-        ).click()
-
-    }
-
-    fun scrollToElementWithText(text: String?): MobileElement {
+    protected fun scrollToElementWithText(elementText: String?, likeSearch: Boolean): MobileElement {
+        var xpath: By = getSearchByTextXpath(elementText, likeSearch)
         var element: MobileElement = AppiumUtil.waitForPresenceOfElement(
             getDriver(),
-            By.xpath("//*[contains(@text,'$text')]"),
+            xpath,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
 
         // TODO: check if the below code works for both iOS and Android
-        val action = TouchActions(driver)
+        val action = TouchActions(getDriver())
         action.scroll(element, 10, 100)
         action.perform()
 
         return element;
     }
 
-    fun hideKeyboard() {
+    protected fun hideKeyboard() {
         getDriver()?.hideKeyboard()
+    }
+
+    /**
+     * Gets elements by text and returns true if element1 is above element2
+     */
+    protected fun isElementAbove(elementText1: String?, elementText2: String?, likeSearch: Boolean): Boolean{
+        var element1: MobileElement = waitForElementToBeClickable(elementText1,likeSearch)
+        var element2: MobileElement = waitForElementToBeClickable(elementText2,likeSearch)
+        return AppiumUtil.isElementAboveElement(element1, element2)
+    }
+
+    // for experimentation purposes
+    protected fun printElementLocationAndSize(string1: String?, string2: String?, string3: String?) {
+        var element1: MobileElement = AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            By.xpath("//*[contains(@text,'$string1')]"),
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
+            0
+        )
+
+        var element2: MobileElement = AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            By.xpath("//*[contains(@text,'$string2')]"),
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
+            0
+        )
+
+        var element3: MobileElement = AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            By.xpath("//*[contains(@text,'$string3')]"),
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
+            0
+        )
+
+        println("Element1 '$string1': location[${element1.location}] | size[${element1.size}]")
+        println("Element1 '$string2': location[${element2.location}] | size[${element2.size}]")
+        println("Element1 '$string3': location[${element3.location}] | size[${element3.size}]")
     }
 
 

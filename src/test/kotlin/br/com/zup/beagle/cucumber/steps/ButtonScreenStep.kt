@@ -22,6 +22,7 @@ import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.Assert
 
 
 class ButtonScreenStep : AbstractStep() {
@@ -35,14 +36,14 @@ class ButtonScreenStep : AbstractStep() {
 
     @Given("^that I'm on the button screen$")
     fun checkButtonScreen() {
-        //ScreenRobot() .checkViewContainsText(BUTTON_SCREEN_HEADER, true)
+        //ScreenRobot().checkViewContainsText(BUTTON_SCREEN_HEADER, true)
         ButtonScreen(getDriver())
     }
 
     @When("I click on a component with a valid style attribute configured$")
     fun clickOnButtonWithStyle() {
         //ScreenRobot().clickOnText(BUTTON_WITH_STYLE_TEXT).sleep(2)
-        clickOnElementWithText(BUTTON_WITH_STYLE_TEXT)
+        clickOnElementWithText(BUTTON_WITH_STYLE_TEXT, true)
     }
 
     @Then("all my button components should render their respective text attributes correctly$")
@@ -52,9 +53,9 @@ class ButtonScreenStep : AbstractStep() {
             .checkViewContainsText(BUTTON_WITH_STYLE_TEXT)
             .checkViewContainsText(BUTTON_WITH_APPEARANCE_TEXT)
             .sleep(2)*/
-        checkScreenContainsElementWithText(BUTTON_DEFAULT_TEXT)
-        checkScreenContainsElementWithText(BUTTON_WITH_STYLE_TEXT)
-        checkScreenContainsElementWithText(BUTTON_WITH_APPEARANCE_TEXT)
+        Assert.assertTrue(screenContainsElementWithText(BUTTON_DEFAULT_TEXT, false))
+        Assert.assertTrue(screenContainsElementWithText(BUTTON_WITH_STYLE_TEXT, true))
+        Assert.assertTrue(screenContainsElementWithText(BUTTON_WITH_APPEARANCE_TEXT, true))
     }
 
     @Then("component should render the action attribute correctly$")
@@ -63,8 +64,8 @@ class ButtonScreenStep : AbstractStep() {
             .checkViewContainsText(ACTION_CLICK_HEADER)
             .checkViewContainsText(ACTION_CLICK_TEXT)
             .sleep(2)*/
-        checkScreenContainsElementWithText(ACTION_CLICK_HEADER)
-        checkScreenContainsElementWithText(ACTION_CLICK_TEXT)
+        Assert.assertTrue(screenContainsElementWithText(ACTION_CLICK_HEADER, true))
+        Assert.assertTrue(screenContainsElementWithText(ACTION_CLICK_TEXT, true))
     }
 
 
