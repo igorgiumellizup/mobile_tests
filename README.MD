@@ -16,7 +16,7 @@ This project uses [Appium](http://appium.io/) and [Cucumber](https://cucumber.io
 ### Android
 
 A different version of the automated-tests app was implemented for this project. The new app has 
-a main screen activity that takes a BFF URL and loads the request page. This was necessary because 
+a main screen activity that takes a BFF URL and loads the requestd bff end-point. This was necessary because 
 Appium can't manipulate or create an app source code in orther to create a custom app. Appium only 
 works with already compiled apps.
 
