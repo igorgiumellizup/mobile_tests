@@ -102,6 +102,7 @@ object SuiteSetup {
         }*/
     }
 
+    /*
     @Throws(IOException::class)
     private fun startAppiumServer() {
         val serviceBuilder = AppiumServiceBuilder()
@@ -111,6 +112,7 @@ object SuiteSetup {
         service = AppiumDriverLocalService.buildDefaultService()
         service?.start()
     }
+    */
 
 
 }

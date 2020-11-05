@@ -20,6 +20,7 @@ import br.com.zup.beagle.cucumber.elements.BUTTON_SCREEN_HEADER
 import io.appium.java_client.AppiumDriver
 import org.openqa.selenium.By
 
+@Suppress("UNCHECKED_CAST")
 class ButtonScreen(mobileDriver: AppiumDriver<*>?) : AbstractScreen(mobileDriver) {
 
     override fun <T : AbstractScreen> waitForScreenToLoad(): T {

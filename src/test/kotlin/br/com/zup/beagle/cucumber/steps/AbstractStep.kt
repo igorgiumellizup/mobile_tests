@@ -40,13 +40,13 @@ abstract class AbstractStep {
     }
 
     protected fun loadBffScreenFromMainScreen() {
-        var mainScreen: MainScreen = MainScreen(getDriver())
+        val mainScreen = MainScreen(getDriver())
         mainScreen.setBffUrl(SuiteSetup.getBffBaseUrl() + bffRelativeUrlPath)
         mainScreen.clickOnGoButton()
     }
 
     private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean): By {
-        var xpath: By
+        val xpath: By
         if (likeSearch)
             xpath = By.xpath("//*[contains(@text,'$elementText')]")
         else
@@ -56,7 +56,7 @@ abstract class AbstractStep {
     }
 
     private fun getSearchByHintXpath(elementHint: String?, likeSearch: Boolean): By {
-        var xpath: By
+        val xpath: By
         if (likeSearch)
             xpath = By.xpath("//*[contains(@hint,'$elementHint')]")
         else
@@ -66,7 +66,7 @@ abstract class AbstractStep {
     }
 
     protected fun waitForElementToBeClickable(elementText: String?, likeSearch: Boolean): MobileElement {
-        var xpath: By = getSearchByTextXpath(elementText, likeSearch)
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
         return AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             xpath,
@@ -77,7 +77,7 @@ abstract class AbstractStep {
     }
 
     protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean): Boolean {
-        var xpath: By = getSearchByTextXpath(elementText, likeSearch)
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
         return AppiumUtil.elementExists(getDriver(), xpath, 1000)
     }
 
@@ -97,8 +97,8 @@ abstract class AbstractStep {
     }
 
     protected fun scrollToElementWithText(elementText: String?, likeSearch: Boolean): MobileElement {
-        var xpath: By = getSearchByTextXpath(elementText, likeSearch)
-        var element: MobileElement = AppiumUtil.waitForPresenceOfElement(
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
+        val element: MobileElement = AppiumUtil.waitForPresenceOfElement(
             getDriver(),
             xpath,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
@@ -109,7 +109,7 @@ abstract class AbstractStep {
         action.scroll(element, 10, 100)
         action.perform()
 
-        return element;
+        return element
     }
 
     protected fun hideKeyboard() {
@@ -120,28 +120,28 @@ abstract class AbstractStep {
      * Gets elements by text and returns true if element1 is above element2
      */
     protected fun isElementAbove(elementText1: String?, elementText2: String?, likeSearch: Boolean): Boolean{
-        var element1: MobileElement = waitForElementToBeClickable(elementText1,likeSearch)
-        var element2: MobileElement = waitForElementToBeClickable(elementText2,likeSearch)
+        val element1: MobileElement = waitForElementToBeClickable(elementText1,likeSearch)
+        val element2: MobileElement = waitForElementToBeClickable(elementText2,likeSearch)
         return AppiumUtil.isElementAboveElement(element1, element2)
     }
 
     // for experimentation purposes
     protected fun printElementLocationAndSize(string1: String?, string2: String?, string3: String?) {
-        var element1: MobileElement = AppiumUtil.waitForElementToBeClickable(
+        val element1: MobileElement = AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             By.xpath("//*[contains(@text,'$string1')]"),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
         )
 
-        var element2: MobileElement = AppiumUtil.waitForElementToBeClickable(
+        val element2: MobileElement = AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             By.xpath("//*[contains(@text,'$string2')]"),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
         )
 
-        var element3: MobileElement = AppiumUtil.waitForElementToBeClickable(
+        val element3: MobileElement = AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             By.xpath("//*[contains(@text,'$string3')]"),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,

@@ -2,7 +2,7 @@
 
 This project uses [Appium](http://appium.io/) and [Cucumber](https://cucumber.io/) frameworks to run both Android and iOS user interface tests
 
-## Requirements before running
+## Requirements before running the tests
 
 - Appium
 - Android SDK and Tools
