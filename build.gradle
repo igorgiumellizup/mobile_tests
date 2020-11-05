@@ -43,7 +43,7 @@ task cucumber() {
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = [/*'--plugin','pretty', */
                     '--glue', 'br.com.zup.beagle.cucumber.steps', 'src/test/resources/features',
-                    '--tags','@button']
+                    '--tags','not @inProgress']
         }
     }
 }
