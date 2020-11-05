@@ -20,9 +20,13 @@ a main screen activity that takes a BFF URL and loads the request page. This was
 Appium can't manipulate or create an app source code in orther to create a custom app. Appium only 
 works with already compiled apps.
 
-- Run the emulator with the new app installed.
+Ir order to install the new app in the Android image for the tests, run [this project](https://github.com/ZupIT/beagle/tree/feature/igor_appium) pointing to
+android/automated-tests module. The emulator will load with the app already installed 
+
+In case the emulator is already set with the new app, it's possible to run the emulator without opening Android Studio.
 Example in Windows: ``C:\Users\YOUR-USER\AppData\Local\Android\Sdk\emulator\emulator.exe -avd Pixel_3a_API_30_x86``
 
+The emulator must be running before running the tests
  
 ### iOS (in progress...)
 
