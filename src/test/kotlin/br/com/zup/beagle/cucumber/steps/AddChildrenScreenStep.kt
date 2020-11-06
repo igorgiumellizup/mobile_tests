@@ -33,7 +33,7 @@ class AddChildrenScreenSteps : AbstractStep() {
     private val ADD_CHILDREN_HEADER = "Add Children"
     private val TEXT_FIXED = "I'm the single text on screen"
     private val TEXT_ADDED = "New text added"
-    private val CONTAINER_ID = "containerId"
+    //private val CONTAINER_ID = "containerId"
 
 
     @Before("@addChildren")
