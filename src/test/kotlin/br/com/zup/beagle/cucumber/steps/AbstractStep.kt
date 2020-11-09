@@ -48,9 +48,9 @@ abstract class AbstractStep {
     private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean): By {
         val xpath: By
         if (likeSearch)
-            xpath = By.xpath("//*[contains(@text,'$elementText')]")
+            xpath = By.xpath("//*[contains(@text,\"$elementText\")]")
         else
-            xpath = By.xpath("//*[@text='$elementText']")
+            xpath = By.xpath("//*[@text=\"$elementText\"]")
 
         return xpath
     }
@@ -58,9 +58,9 @@ abstract class AbstractStep {
     private fun getSearchByHintXpath(elementHint: String?, likeSearch: Boolean): By {
         val xpath: By
         if (likeSearch)
-            xpath = By.xpath("//*[contains(@hint,'$elementHint')]")
+            xpath = By.xpath("//*[contains(@hint,\"$elementHint\")]")
         else
-            xpath = By.xpath("//*[@hint='$elementHint']")
+            xpath = By.xpath("//*[@hint=\"$elementHint\"]")
 
         return xpath
     }

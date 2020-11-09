@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-@action @addChildren @regression @inProgress
+@action @addChildren @regression
 Feature: AddChildren validation
     As a Beagle developer/user
     I'd like to make sure my addChildren action works as expected
@@ -25,19 +25,19 @@ Feature: AddChildren validation
 
     Scenario: Default - AddChildren append a Text in the container children
         When I click on button DEFAULT
-        Then A Text need to be added after the already existing one
+        Then A Text needs to be added after the already existing one
 
     Scenario: Prepend - AddChildren prepend a Text in the container children
         When I click on button PREPEND
-        Then A Text need to be added before the already existing one
+        Then A Text needs to be added before the already existing one
 
     Scenario: Append - AddChildren append a Text in the container children
         When I click on button APPEND
-        Then A Text need to be added after the already existing one
+        Then A Text needs to be added after the already existing one
 
     Scenario: Replace - AddChildren replace the children container to a Text
         When I click on button REPLACE
-        Then A Text need to replace the already existing one
+        Then A Text needs to replace the already existing one
 
     Scenario: Prepend component doesn't exist - AddChildren replace the children container to a Text
         When I click on button PREPEND COMPONENT NULL

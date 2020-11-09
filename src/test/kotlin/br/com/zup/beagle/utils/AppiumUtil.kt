@@ -212,7 +212,7 @@ object AppiumUtil {
      */
     @Synchronized
     fun isElementAboveElement(element1: MobileElement, element2: MobileElement): Boolean{
-        var element1LocationY: Int = element1.location.y + element1.size.height
+        var element1LocationY: Int = element1.location.y // + element1.size.height
         var element2LocationY: Int = element2.location.y
 
         if (element2LocationY > element1LocationY)
