@@ -20,17 +20,15 @@ import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileElement
 import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.remote.MobileCapabilityType
-import io.appium.java_client.service.local.AppiumDriverLocalService
-import io.appium.java_client.service.local.AppiumServiceBuilder
 import org.openqa.selenium.remote.DesiredCapabilities
-import java.io.IOException
 import java.net.URL
 
 object SuiteSetup {
 
     private var platform: String? = null
     private var driver: AppiumDriver<*>? = null
-    private var service: AppiumDriverLocalService? = null
+
+    //private var service: AppiumDriverLocalService? = null
     private var bffBaseUrl: String? = null
 
 

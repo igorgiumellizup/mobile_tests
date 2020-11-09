@@ -36,3 +36,13 @@ Not tested yet
 
 ``gradle cucumber -Dplatform=android`` (or ios)
 
+
+## Debugging
+
+Debugging is possible running Cucumber as a JUnit runner. This method is recommended to avoid breakpoint skipping 
+problems during debugging a gradle task.
+Refer to ``br.com.zup.beagle.cucumber.steps.Runner`` as the official runner. Right click on it 
+and select "Run Runner" (using IntelliJ IDEA). This first run will fail because some params were 
+missing. Edit the run plan and add the following to the 'Arguments' section: -Dplatform=android (or ios).
+Now, just run \ debug the plan 
+ 

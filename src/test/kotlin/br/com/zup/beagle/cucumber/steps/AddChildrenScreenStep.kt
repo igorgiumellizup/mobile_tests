@@ -17,7 +17,6 @@
 package br.com.zup.beagle.cucumber.steps
 
 
-import br.com.zup.beagle.cucumber.steps.AbstractStep
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -27,6 +26,7 @@ import org.junit.Assert
  * IN PROGRESS
  */
 
+@Suppress("unused")
 class AddChildrenScreenSteps : AbstractStep() {
 
     override var bffRelativeUrlPath = "/add-children"
@@ -44,7 +44,7 @@ class AddChildrenScreenSteps : AbstractStep() {
     @Given("^that I'm on the addChildren Screen$")
     fun checkImageScreen() {
         //ScreenRobot().checkViewContainsText(ADD_CHILDREN_HEADER, true)
-        screenContainsElementWithText(ADD_CHILDREN_HEADER,false)
+        screenContainsElementWithText(ADD_CHILDREN_HEADER, false)
     }
 
     @Then("^A Text need to be added after the already existing one$")
