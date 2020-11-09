@@ -18,7 +18,13 @@ package br.com.zup.beagle.cucumber.steps
 
 import br.com.zup.beagle.setup.SuiteSetup
 import io.cucumber.java.After
-import io.cucumber.java.Before
+import io.cucumber.java.Scenario
+import org.apache.commons.io.FileUtils
+import org.junit.AfterClass
+import org.openqa.selenium.OutputType
+import org.openqa.selenium.TakesScreenshot
+import java.io.File
+
 
 class HookManager {
 
@@ -33,7 +39,20 @@ class HookManager {
     */
 
     @After
-    fun tearDownAfterFeature() {
-        SuiteSetup.closeDriver()
+    fun tearDownAfterFeature(scenario: Scenario) {
+
+        if (scenario.isFailed){
+            try{
+                val scrFile: File = (SuiteSetup.getDriver() as TakesScreenshot).getScreenshotAs(OutputType.FILE)
+                FileUtils.moveFile(
+                    scrFile,
+                    File("./build/screenshots/ERROR-${scenario.name}.png")
+                )
+            }catch (exception: Exception){
+                exception.printStackTrace()
+            }
+        }
+
+        SuiteSetup.resetApp()
     }
 }

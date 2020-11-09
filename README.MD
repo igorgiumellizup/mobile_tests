@@ -45,4 +45,7 @@ Refer to ``br.com.zup.beagle.cucumber.steps.Runner`` as the official runner. Rig
 and select "Run Runner" (using IntelliJ IDEA). This first run will fail because some params were 
 missing. Edit the run plan and add the following to the 'Arguments' section: -Dplatform=android (or ios).
 Now, just run \ debug the plan 
- 
+
+## Screenshots on error
+
+Whenever a feature or step fails, a screenshot is generated at build/screenshots 

@@ -158,13 +158,4 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
     protected fun clearElementValue(locator: By) {
         clearElementValue(waitForElementToBeClickable(locator))
     }
-
-    protected fun sleep(milliseconds: Long) {
-        try {
-            Thread.sleep(milliseconds)
-        } catch (e: Exception) {
-        }
-    }
-
-
 }

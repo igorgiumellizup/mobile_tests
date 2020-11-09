@@ -76,9 +76,18 @@ abstract class AbstractStep {
 
     }
 
-    protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean): Boolean {
+    protected fun waitForInvisibilityOfElementWithText(elementText: String?, likeSearch: Boolean) {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch)
-        return AppiumUtil.elementExists(getDriver(), xpath, 1000)
+        AppiumUtil.waitForInvisibilityOf(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+    }
+
+    protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean): Boolean {
+        return screenContainsElementWithText(elementText, likeSearch, 2000)
+    }
+
+    protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean, timeout: Long): Boolean {
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
+        return AppiumUtil.elementExists(getDriver(), xpath, timeout)
     }
 
     protected fun clickOnElementWithText(elementText: String?, likeSearch: Boolean) {
@@ -119,10 +128,17 @@ abstract class AbstractStep {
     /**
      * Gets elements by text and returns true if element1 is above element2
      */
-    protected fun isElementAbove(elementText1: String?, elementText2: String?, likeSearch: Boolean): Boolean{
-        val element1: MobileElement = waitForElementToBeClickable(elementText1,likeSearch)
-        val element2: MobileElement = waitForElementToBeClickable(elementText2,likeSearch)
+    protected fun isElementAbove(elementText1: String?, elementText2: String?, likeSearch: Boolean): Boolean {
+        val element1: MobileElement = waitForElementToBeClickable(elementText1, likeSearch)
+        val element2: MobileElement = waitForElementToBeClickable(elementText2, likeSearch)
         return AppiumUtil.isElementAboveElement(element1, element2)
+    }
+
+    protected fun sleep(milliseconds: Long) {
+        try {
+            Thread.sleep(milliseconds)
+        } catch (e: Exception) {
+        }
     }
 
     // for experimentation purposes

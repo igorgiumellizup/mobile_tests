@@ -31,6 +31,7 @@ object AppiumUtil {
     @Synchronized
     fun waitForPresenceOfElement(driver: MobileDriver<*>?, locator: By, timeoutInMilliseconds: Long): MobileElement {
         val wait: FluentWait<MobileDriver<*>> = FluentWait<MobileDriver<*>>(driver)
+        wait.pollingEvery(Duration.ofMillis(500))
         wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
         wait.ignoring(NoSuchElementException::class.java)
         wait.ignoring(StaleElementReferenceException::class.java)

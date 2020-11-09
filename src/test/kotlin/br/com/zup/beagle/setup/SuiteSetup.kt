@@ -89,7 +89,7 @@ object SuiteSetup {
         }
     }
 
-    fun closeDriver() {
+    fun resetApp() {
         try {
             driver?.resetApp();
             //driver?.quit();
@@ -98,6 +98,16 @@ object SuiteSetup {
         } /*finally {
             service?.stop()
         }*/
+    }
+
+    fun closeDriver() {
+        try {
+            driver?.closeApp();
+        } catch (e: Exception) {
+            // e.printStackTrace();
+        } finally {
+            driver?.quit()
+        }
     }
 
     /*
