@@ -19,6 +19,7 @@ package br.com.zup.beagle.setup
 import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileElement
 import io.appium.java_client.android.AndroidDriver
+import io.appium.java_client.ios.IOSDriver
 import io.appium.java_client.remote.MobileCapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
 import java.net.URL
@@ -76,7 +77,7 @@ object SuiteSetup {
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android")
             capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11")
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_3a_API_30_x86")
-            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2") // iOS = XCUITest
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2")
             // MobileCapabilityType.APP capability is not required for Android if you specify appPackage and appActivity
             // In this case, the Android image already contains the app
             capabilities.setCapability("appPackage", "br.com.zup.beagle.automatedTests")
@@ -85,7 +86,13 @@ object SuiteSetup {
             driver = AndroidDriver<MobileElement>(/*service?.url*/URL(APPIUM_URL), capabilities)
             //driver?.launchApp()
         } else {
-            // TODO: iOS
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS")
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "14.1")
+            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 12")
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest")
+            capabilities.setCapability("app", "/Users/luisgustavooliveirasilva/Library/Developer/Xcode/DerivedData/Beagle-gnqdhkpaxlbwgnbcpaltnxvwyeum/Build/Products/Debug-iphonesimulator/AutomatedTests.app")
+
+            driver = IOSDriver<MobileElement>(URL(APPIUM_URL),capabilities)
         }
     }
 

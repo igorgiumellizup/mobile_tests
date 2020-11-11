@@ -27,15 +27,15 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy
 @Suppress("UNCHECKED_CAST")
 class MainScreen(mobileDriver: AppiumDriver<*>?) : AbstractScreen(mobileDriver) {
 
-    @iOSXCUITFindBy(accessibility = "TODO")
+    @iOSXCUITFindBy(accessibility = "MainScreenLabel")
     @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/MainScreenLabel")
     public lateinit var labelElement: MobileElement
 
-    @iOSXCUITFindBy(accessibility = "TODO")
+    @iOSXCUITFindBy(accessibility = "TextBffUrl")
     @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/TextBffUrl")
     public lateinit var bffInputTextFieldElement: MobileElement
 
-    @iOSXCUITFindBy(accessibility = "TODO")
+    @iOSXCUITFindBy(accessibility = "SendBffRequestButton")
     @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/SendBffRequestButton")
     public lateinit var sendBffRequestButtonElement: MobileElement
 

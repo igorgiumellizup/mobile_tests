@@ -17,6 +17,6 @@
 package br.com.zup.beagle.setup
 
 
-const val APPIUM_URL = "http://0.0.0.0:4723/wd/hub";
+const val APPIUM_URL = "http://localhost:4723/wd/hub";
 const val DEFAULT_ELEMENT_WAIT_TIME_IN_MILL: Long = 6000
 const val DEFAULT_SCREEN_WAIT_TIME_IN_MILL: Long = 30000
