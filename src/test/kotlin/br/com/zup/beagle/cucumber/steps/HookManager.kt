@@ -54,7 +54,7 @@ class HookManager {
                     destFile
                 )
             }catch (exception: Exception){
-                exception.printStackTrace()
+                //exception.printStackTrace()
             }
         }
 
