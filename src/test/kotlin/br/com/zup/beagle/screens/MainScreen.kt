@@ -28,15 +28,15 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy
 class MainScreen(mobileDriver: AppiumDriver<*>?) : AbstractScreen(mobileDriver) {
 
     @iOSXCUITFindBy(accessibility = "MainScreenLabel")
-    @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/MainScreenLabel")
+    @AndroidFindBy(id = "MainScreenLabel") // br.com.zup.beagle.automatedTests:id/MainScreenLabel
     public lateinit var labelElement: MobileElement
 
     @iOSXCUITFindBy(accessibility = "TextBffUrl")
-    @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/TextBffUrl")
+    @AndroidFindBy(id = "TextBffUrl") // br.com.zup.beagle.automatedTests:id/TextBffUrl
     public lateinit var bffInputTextFieldElement: MobileElement
 
     @iOSXCUITFindBy(accessibility = "SendBffRequestButton")
-    @AndroidFindBy(id = "br.com.zup.beagle.automatedTests:id/SendBffRequestButton")
+    @AndroidFindBy(id = "SendBffRequestButton") // br.com.zup.beagle.automatedTests:id/SendBffRequestButton
     public lateinit var sendBffRequestButtonElement: MobileElement
 
     override fun <T : AbstractScreen> waitForScreenToLoad(): T {
