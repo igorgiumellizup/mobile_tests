@@ -47,10 +47,17 @@ abstract class AbstractStep {
 
     private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean): By {
         val xpath: By
-        if (likeSearch)
-            xpath = By.xpath("//*[contains(@text,\"$elementText\")]")
-        else
-            xpath = By.xpath("//*[@text=\"$elementText\"]")
+        if (SuiteSetup.isAndroid()) {
+            if (likeSearch)
+                xpath = By.xpath("//*[contains(@text,\"$elementText\")]")
+            else
+                xpath = By.xpath("//*[@text=\"$elementText\"]")
+        } else {
+            if (likeSearch)
+                xpath = By.xpath("//*[contains(@name,\"$elementText\")]")
+            else
+                xpath = By.xpath("//*[@name=\"$elementText\"]")
+        }
 
         return xpath
     }

@@ -17,6 +17,7 @@
 package br.com.zup.beagle.screens
 
 import br.com.zup.beagle.cucumber.elements.BUTTON_SCREEN_HEADER
+import br.com.zup.beagle.setup.SuiteSetup
 import io.appium.java_client.AppiumDriver
 import org.openqa.selenium.By
 
@@ -24,7 +25,11 @@ import org.openqa.selenium.By
 class ButtonScreen(mobileDriver: AppiumDriver<*>?) : AbstractScreen(mobileDriver) {
 
     override fun <T : AbstractScreen> waitForScreenToLoad(): T {
-        waitForScreenToLoad(arrayOf(By.xpath("//*[contains(@text,'$BUTTON_SCREEN_HEADER')]")))
+        if (SuiteSetup.isAndroid()) {
+            waitForScreenToLoad(arrayOf(By.xpath("//*[contains(@text,'$BUTTON_SCREEN_HEADER')]")))
+        } else {
+            waitForScreenToLoad(arrayOf(By.xpath("//*[contains(@name,'$BUTTON_SCREEN_HEADER')]")))
+        }
         return this as T
     }
 }
