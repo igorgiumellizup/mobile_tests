@@ -99,12 +99,9 @@ object SuiteSetup {
     fun resetApp() {
         try {
             driver?.resetApp();
-            //driver?.quit();
         } catch (e: Exception) {
             // e.printStackTrace();
-        } /*finally {
-            service?.stop()
-        }*/
+        }
     }
 
     fun closeDriver() {

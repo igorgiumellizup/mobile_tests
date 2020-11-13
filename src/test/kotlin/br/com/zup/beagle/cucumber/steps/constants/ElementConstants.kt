@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.com.zup.beagle.cucumber.elements
+package br.com.zup.beagle.cucumber.steps.constants
 
 const val MAIN_HEADER = "Automated Tests"
 

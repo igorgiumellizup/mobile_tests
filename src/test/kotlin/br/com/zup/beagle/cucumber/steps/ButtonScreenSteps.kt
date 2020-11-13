@@ -16,7 +16,7 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.elements.*
+import br.com.zup.beagle.cucumber.steps.constants.*
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then

@@ -52,7 +52,9 @@ task cucumber() {
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = [/*'--plugin','pretty', */
                     '--glue', 'br.com.zup.beagle.cucumber.steps', 'src/test/resources/features',
-                    '--tags','@' + System.getProperty("platform") + " and not @inProgress"]
+                    '--tags', '@' + System.getProperty("platform") + " and not @inProgress",
+                    '--plugin', 'br.com.zup.beagle.cucumber.CustomEvent']
+
             println 'Cucumber args: ' + args
         }
     }
@@ -61,7 +63,7 @@ task cucumber() {
 
 test {
 //    useJUnitPlatform()
-      systemProperty "platform", System.getProperty("platform")
+    systemProperty "platform", System.getProperty("platform")
 }
 
 
