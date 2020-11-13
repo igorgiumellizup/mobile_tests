@@ -40,7 +40,7 @@ class AddChildrenScreenSteps : AbstractStep() {
     @Given("^that I'm on the addChildren Screen$")
     fun checkImageScreen() {
         //ScreenRobot().checkViewContainsText(ADD_CHILDREN_HEADER, true)
-        Assert.assertTrue(screenContainsElementWithText(ADD_CHILDREN_HEADER, false))
+        Assert.assertTrue(screenContainsElementWithText(ADD_CHILDREN_HEADER, false, false))
     }
 
     @Then("^A Text needs to be added after the already existing one$")
@@ -48,7 +48,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         // waitForBothTexts()
         // onView(withText(TEXT_FIXED)).check(isCompletelyAbove(withText(TEXT_ADDED)))
         waitForFixedAndAddedTexts()
-        Assert.assertTrue(isElementAbove(TEXT_FIXED, TEXT_ADDED, false))
+        Assert.assertTrue(isElementAbove(TEXT_FIXED, TEXT_ADDED, false, false))
     }
 
     @Then("^A Text needs to be added before the already existing one$")
@@ -56,7 +56,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         // waitForBothTexts()
         // onView(withText(TEXT_ADDED)).check(isCompletelyAbove(withText(TEXT_FIXED)))
         waitForFixedAndAddedTexts()
-        Assert.assertTrue(isElementAbove(TEXT_ADDED, TEXT_FIXED, false))
+        Assert.assertTrue(isElementAbove(TEXT_ADDED, TEXT_FIXED, false, false))
     }
 
     @Then("^A Text needs to replace the already existing one$")
@@ -65,7 +65,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         //onView((withText(TEXT_ADDED))).check(matches(isDisplayed()))
         //onView(withId(CONTAINER_ID.toAndroidId())).check(matches(not(withText(TEXT_FIXED))))
         waitForAddedText()
-        Assert.assertFalse(screenContainsElementWithText(TEXT_FIXED, false))
+        Assert.assertFalse(screenContainsElementWithText(TEXT_FIXED, false, false))
     }
 
     @Then("^Nothing should happen$")
@@ -74,7 +74,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         //onView((withText(TEXT_FIXED))).check(matches(isDisplayed()))
         //onView(withId(CONTAINER_ID.toAndroidId())).check(matches(not(withText(TEXT_ADDED))))
         waitForFixedText()
-        Assert.assertFalse(screenContainsElementWithText(TEXT_ADDED, false))
+        Assert.assertFalse(screenContainsElementWithText(TEXT_ADDED, false, false))
     }
 
     private fun waitForFixedAndAddedTexts() {
@@ -84,11 +84,11 @@ class AddChildrenScreenSteps : AbstractStep() {
 
     private fun waitForFixedText() {
         // ScreenRobot().checkViewContainsText(TEXT_FIXED, true)
-        waitForElementToBeClickable(TEXT_FIXED, false)
+        waitForElementToBeClickable(TEXT_FIXED, false, false)
     }
 
     private fun waitForAddedText() {
         // ScreenRobot().checkViewContainsText(TEXT_ADDED, true)
-        waitForElementToBeClickable(TEXT_ADDED, false)
+        waitForElementToBeClickable(TEXT_ADDED, false, false)
     }
 }

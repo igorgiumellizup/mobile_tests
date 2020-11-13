@@ -45,35 +45,26 @@ abstract class AbstractStep {
         mainScreen.clickOnGoButton()
     }
 
-    private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean): By {
+    private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean, ignoreCase: Boolean): By {
         val xpath: By
-        if (SuiteSetup.isAndroid()) {
-            if (likeSearch)
-                xpath = By.xpath("//*[contains(@text,\"$elementText\")]")
-            else
-                xpath = By.xpath("//*[@text=\"$elementText\"]")
-        } else {
-            if (likeSearch)
-                xpath = By.xpath("//*[contains(@name,\"$elementText\")]")
-            else
-                xpath = By.xpath("//*[@name=\"$elementText\"]")
-        }
-
-        return xpath
-    }
-
-    private fun getSearchByHintXpath(elementHint: String?, likeSearch: Boolean): By {
-        val xpath: By
-        if (likeSearch)
-            xpath = By.xpath("//*[contains(@hint,\"$elementHint\")]")
+        val property = if (SuiteSetup.isAndroid())
+            "text"
         else
-            xpath = By.xpath("//*[@hint=\"$elementHint\"]")
+            "name"
 
-        return xpath
+        return AppiumUtil.getPropertyXpath(property, elementText, likeSearch, ignoreCase)
     }
 
-    protected fun waitForElementToBeClickable(elementText: String?, likeSearch: Boolean): MobileElement {
-        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
+    private fun getSearchByHintXpath(elementHint: String?, likeSearch: Boolean, ignoreCase: Boolean): By {
+        return AppiumUtil.getPropertyXpath("hint", elementHint, likeSearch, ignoreCase)
+    }
+
+    protected fun waitForElementToBeClickable(
+        elementText: String?,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ): MobileElement {
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
         return AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             xpath,
@@ -83,37 +74,50 @@ abstract class AbstractStep {
 
     }
 
-    protected fun waitForInvisibilityOfElementWithText(elementText: String?, likeSearch: Boolean) {
-        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
+    protected fun waitForInvisibilityOfElementWithText(elementText: String?, likeSearch: Boolean, ignoreCase: Boolean) {
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
         AppiumUtil.waitForInvisibilityOf(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
-    protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean): Boolean {
-        return screenContainsElementWithText(elementText, likeSearch, 2000)
+    protected fun screenContainsElementWithText(
+        elementText: String?,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ): Boolean {
+        return screenContainsElementWithText(elementText, likeSearch, ignoreCase, 2000)
     }
 
-    protected fun screenContainsElementWithText(elementText: String?, likeSearch: Boolean, timeout: Long): Boolean {
-        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
+    protected fun screenContainsElementWithText(
+        elementText: String?,
+        likeSearch: Boolean,
+        ignoreCase: Boolean,
+        timeout: Long
+    ): Boolean {
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
         return AppiumUtil.elementExists(getDriver(), xpath, timeout)
     }
 
-    protected fun clickOnElementWithText(elementText: String?, likeSearch: Boolean) {
-        waitForElementToBeClickable(elementText, likeSearch).click()
+    protected fun clickOnElementWithText(elementText: String?, likeSearch: Boolean, ignoreCase: Boolean) {
+        waitForElementToBeClickable(elementText, likeSearch, ignoreCase).click()
 
     }
 
-    protected fun clickOnElementWithHint(hintText: String?, likeSearch: Boolean) {
+    protected fun clickOnElementWithHint(hintText: String?, likeSearch: Boolean, ignoreCase: Boolean) {
         AppiumUtil.waitForElementToBeClickable(
             getDriver(),
-            getSearchByHintXpath(hintText, likeSearch),
+            getSearchByHintXpath(hintText, likeSearch, ignoreCase),
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
         ).click()
 
     }
 
-    protected fun scrollToElementWithText(elementText: String?, likeSearch: Boolean): MobileElement {
-        val xpath: By = getSearchByTextXpath(elementText, likeSearch)
+    protected fun scrollToElementWithText(
+        elementText: String?,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ): MobileElement {
+        val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
         val element: MobileElement = AppiumUtil.waitForPresenceOfElement(
             getDriver(),
             xpath,
@@ -135,9 +139,14 @@ abstract class AbstractStep {
     /**
      * Gets elements by text and returns true if element1 is above element2
      */
-    protected fun isElementAbove(elementText1: String?, elementText2: String?, likeSearch: Boolean): Boolean {
-        val element1: MobileElement = waitForElementToBeClickable(elementText1, likeSearch)
-        val element2: MobileElement = waitForElementToBeClickable(elementText2, likeSearch)
+    protected fun isElementAbove(
+        elementText1: String?,
+        elementText2: String?,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ): Boolean {
+        val element1: MobileElement = waitForElementToBeClickable(elementText1, likeSearch, ignoreCase)
+        val element2: MobileElement = waitForElementToBeClickable(elementText2, likeSearch, ignoreCase)
         return AppiumUtil.isElementAboveElement(element1, element2)
     }
 

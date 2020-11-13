@@ -16,6 +16,7 @@
 
 package br.com.zup.beagle.utils
 
+import br.com.zup.beagle.setup.SuiteSetup
 import io.appium.java_client.MobileDriver
 import io.appium.java_client.MobileElement
 import io.appium.java_client.functions.ExpectedCondition
@@ -222,5 +223,29 @@ object AppiumUtil {
             return true
         
         return false
+    }
+
+    @Synchronized
+    fun getPropertyXpath(property: String?, propertyValue: String?, likeSearch: Boolean, ignoreCase: Boolean): By {
+        val xpath: By
+
+        if (ignoreCase) {
+            if (likeSearch) {
+                xpath =
+                    By.xpath("//*[contains(translate(@$property, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),\"${propertyValue?.toLowerCase()}\")]")
+            } else {
+                xpath =
+                    By.xpath("//*[translate(@$property, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"${propertyValue?.toLowerCase()}\"]")
+            }
+        } else {
+            if (likeSearch) {
+                xpath = By.xpath("//*[contains(@$property,\"$propertyValue\")]")
+
+            } else {
+                xpath = By.xpath("//*[@$property=\"$propertyValue\"]")
+            }
+        }
+
+        return xpath
     }
 }

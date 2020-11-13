@@ -23,7 +23,13 @@ import io.appium.java_client.MobileElement
 import io.appium.java_client.pagefactory.AndroidFindBy
 import io.appium.java_client.pagefactory.iOSXCUITFindBy
 
-
+/**
+ * Class that represents the main screen of both Android and iOS.
+ * It is an implementation of the Page Object Model pattern.
+ * Not all screens have its own class because they either have very few elements and interactions, or are used by
+ * only one test.
+ *
+ */
 @Suppress("UNCHECKED_CAST")
 class MainScreen(mobileDriver: AppiumDriver<*>?) : AbstractScreen(mobileDriver) {
 

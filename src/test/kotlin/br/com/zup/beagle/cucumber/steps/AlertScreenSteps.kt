@@ -36,19 +36,19 @@ class AlertScreenSteps : AbstractStep() {
     @Given("^the Beagle application did launch with the alert screen url$")
     fun checkBaseScreen() {
         //ScreenRobot().checkViewContainsText("Alert Screen", true)
-        Assert.assertTrue(screenContainsElementWithText("Alert Screen", false))
+        Assert.assertTrue(screenContainsElementWithText("Alert Screen", false, false))
     }
 
     @When("^I press an alert button with the (.*) title$")
     fun clickOnButton(string: String) {
         //ScreenRobot().clickOnText(string)
-        clickOnElementWithText(string, false)
+        clickOnElementWithText(string, false, false)
     }
 
     @Then("^an alert with the (.*) message should appear on the screen$")
     fun checkAlertMessage(string: String) {
         //ScreenRobot().checkViewContainsText(string, true)
-        Assert.assertTrue(screenContainsElementWithText(string, false))
+        Assert.assertTrue(screenContainsElementWithText(string, false, false))
     }
 
     @Then("^an alert with the (.*) and (.*) should appear on the screen$")
@@ -56,19 +56,19 @@ class AlertScreenSteps : AbstractStep() {
         //ScreenRobot()
         //  .checkViewContainsText(string, true)
         // .checkViewContainsText(string2, true)
-        Assert.assertTrue(screenContainsElementWithText(string, false))
-        Assert.assertTrue(screenContainsElementWithText(string2, false))
+        Assert.assertTrue(screenContainsElementWithText(string, false, false))
+        Assert.assertTrue(screenContainsElementWithText(string2, false, false))
     }
 
     @Then("^I press the confirmation (.*) button on the alert$")
     fun clickOnTheConfirmationActionButtonWithText(string: String) {
         //ScreenRobot().clickOnText(string)
-        clickOnElementWithText(string, false)
+        clickOnElementWithText(string, false, false)
     }
 
     @Then("^an alert with a confirmation button with (.*) label should appear$")
     fun checkAlertConfirmationButtonLabelIsSetWithText(string: String) {
         //ScreenRobot().checkViewContainsText(string)
-        Assert.assertTrue(screenContainsElementWithText(string.toUpperCase(), false)) // the label is upper case
+        Assert.assertTrue(screenContainsElementWithText(string, false, true))
     }
 }
