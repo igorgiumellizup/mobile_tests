@@ -25,7 +25,7 @@ import io.cucumber.java.en.When
 import org.junit.Assert
 
 
-class ButtonScreenStep : AbstractStep() {
+class ButtonScreenSteps : AbstractStep() {
 
     override var bffRelativeUrlPath = "/button"
 

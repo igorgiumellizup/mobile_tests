@@ -24,6 +24,6 @@ import org.junit.runner.RunWith
  * Used for debugging since cucumber task in gradle.build won't hit breakpoints
  */
 @RunWith(Cucumber::class)
-@CucumberOptions(tags = "@button", features = ["src/test/resources/features"])
+@CucumberOptions(tags = "@alert", features = ["src/test/resources/features"])
 class Runner {
 }
