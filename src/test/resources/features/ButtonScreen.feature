@@ -14,7 +14,7 @@
 # limitations under the License.
 #
     
-@button @regression
+@button @android @ios
 Feature: Button Component Validation
 
     As a Beagle developer/user

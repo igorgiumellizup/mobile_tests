@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-@action @addChildren @regression
+@action @android @ios
 Feature: AddChildren validation
     As a Beagle developer/user
     I'd like to make sure my addChildren action works as expected
