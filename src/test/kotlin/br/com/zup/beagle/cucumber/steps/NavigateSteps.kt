@@ -34,11 +34,6 @@ class NavigateScreenSteps : AbstractStep() {
         loadBffScreenFromMainScreen()
     }
 
-    @AfterStep("@navigation")
-    fun afterStep(){
-        sleep(500) // not recommended but the navigation tests deal with many redirects
-    }
-
     @Given("^the Beagle application did launch with the navigation screen url$")
     fun checkBaseScreen() {
         // ScreenRobot().checkViewContainsText("Navigation Screen", true)
@@ -78,8 +73,8 @@ class NavigateScreenSteps : AbstractStep() {
     @Then("^the app should dismiss the view that contains (.*)$")
     fun checkTextIsNotOnAnyView(string1: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string1)
-        Assert.assertFalse(screenContainsElementWithText(string1, false))
-        //waitForInvisibilityOfElementWithText(string1,false)
+        //Assert.assertFalse(screenContainsElementWithText(string1, false))
+        waitForInvisibilityOfElementWithText(string1,false)
     }
 
     @Then("^the view that contains the (.*) must still exist$")

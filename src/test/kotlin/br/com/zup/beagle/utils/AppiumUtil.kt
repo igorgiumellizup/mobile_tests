@@ -138,6 +138,7 @@ object AppiumUtil {
     fun waitForInvisibilityOf(driver: MobileDriver<*>?, locator: By, timeoutInMilliseconds: Long): Boolean {
         val wait = FluentWait(driver)
         wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
+        wait.pollingEvery(Duration.ofMillis(500))
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator))
     }
 
@@ -151,6 +152,7 @@ object AppiumUtil {
         list.add(element)
         val wait = FluentWait(driver)
         wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
+        wait.pollingEvery(Duration.ofMillis(500))
         return wait.until(ExpectedConditions.invisibilityOfAllElements(list as List<WebElement>))
 
     }
