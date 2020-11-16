@@ -63,7 +63,7 @@ class AlertScreenSteps : AbstractStep() {
     @Then("^I press the confirmation (.*) button on the alert$")
     fun clickOnTheConfirmationActionButtonWithText(string: String) {
         //ScreenRobot().clickOnText(string)
-        clickOnElementWithText(string, false, false)
+        clickOnElementWithText(string, false, true)
     }
 
     @Then("^an alert with a confirmation button with (.*) label should appear$")
