@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package br.com.zup.beagle.cucumber.steps.constants
+package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.steps.AbstractStep
+import br.com.zup.beagle.cucumber.steps.constants.SCROLLVIEW_SCREEN_HEADER
 import io.cucumber.java.Before
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given

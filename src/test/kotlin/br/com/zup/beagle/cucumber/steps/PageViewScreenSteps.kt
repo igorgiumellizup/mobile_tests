@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package br.com.zup.beagle.cucumber.steps.constants
+package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.steps.AbstractStep
+import br.com.zup.beagle.cucumber.steps.constants.PAGEVIEW_SCREEN_HEADER
+import br.com.zup.beagle.cucumber.steps.constants.PAGE_1_TEXT
+import br.com.zup.beagle.cucumber.steps.constants.PAGE_2_TEXT
+import br.com.zup.beagle.cucumber.steps.constants.PAGE_3_TEXT
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
