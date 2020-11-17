@@ -20,10 +20,10 @@ import br.com.zup.beagle.screens.MainScreen
 import br.com.zup.beagle.setup.DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
 import br.com.zup.beagle.setup.SuiteSetup
 import br.com.zup.beagle.utils.AppiumUtil
+import br.com.zup.beagle.utils.SwipeDirection
 import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileElement
 import org.openqa.selenium.By
-import org.openqa.selenium.interactions.touch.TouchActions
 
 
 abstract class AbstractStep {
@@ -32,11 +32,11 @@ abstract class AbstractStep {
 
     private var driver: AppiumDriver<*>? = null
 
-    protected fun getDriver(): AppiumDriver<*>? {
+    protected fun getDriver(): AppiumDriver<*> {
         if (driver == null) {
             driver = SuiteSetup.getDriver()
         }
-        return driver
+        return driver!!
     }
 
     protected fun loadBffScreenFromMainScreen() {
@@ -45,7 +45,7 @@ abstract class AbstractStep {
         mainScreen.clickOnGoButton()
     }
 
-    private fun getSearchByTextXpath(elementText: String?, likeSearch: Boolean, ignoreCase: Boolean): By {
+    private fun getSearchByTextXpath(elementText: String, likeSearch: Boolean, ignoreCase: Boolean): By {
         val xpath: By
         val property = if (SuiteSetup.isAndroid())
             "text"
@@ -55,12 +55,12 @@ abstract class AbstractStep {
         return AppiumUtil.getPropertyXpath(property, elementText, likeSearch, ignoreCase)
     }
 
-    private fun getSearchByHintXpath(elementHint: String?, likeSearch: Boolean, ignoreCase: Boolean): By {
+    private fun getSearchByHintXpath(elementHint: String, likeSearch: Boolean, ignoreCase: Boolean): By {
         return AppiumUtil.getPropertyXpath("hint", elementHint, likeSearch, ignoreCase)
     }
 
     protected fun waitForElementToBeClickable(
-        elementText: String?,
+        elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): MobileElement {
@@ -74,13 +74,13 @@ abstract class AbstractStep {
 
     }
 
-    protected fun waitForInvisibilityOfElementWithText(elementText: String?, likeSearch: Boolean, ignoreCase: Boolean) {
+    protected fun waitForInvisibilityOfElementWithText(elementText: String, likeSearch: Boolean, ignoreCase: Boolean) {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
         AppiumUtil.waitForInvisibilityOf(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
     protected fun screenContainsElementWithText(
-        elementText: String?,
+        elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): Boolean {
@@ -88,7 +88,7 @@ abstract class AbstractStep {
     }
 
     protected fun screenContainsElementWithText(
-        elementText: String?,
+        elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean,
         timeout: Long
@@ -97,12 +97,12 @@ abstract class AbstractStep {
         return AppiumUtil.elementExists(getDriver(), xpath, timeout)
     }
 
-    protected fun clickOnElementWithText(elementText: String?, likeSearch: Boolean, ignoreCase: Boolean) {
+    protected fun clickOnElementWithText(elementText: String, likeSearch: Boolean, ignoreCase: Boolean) {
         waitForElementToBeClickable(elementText, likeSearch, ignoreCase).click()
 
     }
 
-    protected fun clickOnElementWithHint(hintText: String?, likeSearch: Boolean, ignoreCase: Boolean) {
+    protected fun clickOnElementWithHint(hintText: String, likeSearch: Boolean, ignoreCase: Boolean) {
         AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             getSearchByHintXpath(hintText, likeSearch, ignoreCase),
@@ -113,7 +113,7 @@ abstract class AbstractStep {
     }
 
     protected fun scrollToElementWithText(
-        elementText: String?,
+        elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): MobileElement {
@@ -124,24 +124,19 @@ abstract class AbstractStep {
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
 
-        // TODO: check if the below code works for both iOS and Android
-        val action = TouchActions(getDriver())
-        action.scroll(element, 10, 100)
-        action.perform()
-
-        return element
+        return AppiumUtil.scrollToElement(getDriver(), element)
     }
 
     protected fun hideKeyboard() {
-        getDriver()?.hideKeyboard()
+        getDriver().hideKeyboard()
     }
 
     /**
      * Gets elements by text and returns true if element1 is above element2
      */
     protected fun isElementAbove(
-        elementText1: String?,
-        elementText2: String?,
+        elementText1: String,
+        elementText2: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): Boolean {
@@ -157,8 +152,25 @@ abstract class AbstractStep {
         }
     }
 
+    protected fun swipeLeft() {
+        AppiumUtil.swipeScreenTo(getDriver(), SwipeDirection.LEFT)
+    }
+
+    protected fun swipeRight() {
+        AppiumUtil.swipeScreenTo(getDriver(), SwipeDirection.RIGHT)
+    }
+
+    protected fun swipeUp() {
+        AppiumUtil.swipeScreenTo(getDriver(), SwipeDirection.UP)
+    }
+
+    protected fun swipeDown() {
+        AppiumUtil.swipeScreenTo(getDriver(), SwipeDirection.DOWN)
+    }
+
+
     // for experimentation purposes
-    protected fun printElementLocationAndSize(string1: String?, string2: String?, string3: String?) {
+    protected fun printElementLocationAndSize(string1: String, string2: String) {
         val element1: MobileElement = AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             By.xpath("//*[contains(@text,'$string1')]"),
@@ -173,16 +185,8 @@ abstract class AbstractStep {
             0
         )
 
-        val element3: MobileElement = AppiumUtil.waitForElementToBeClickable(
-            getDriver(),
-            By.xpath("//*[contains(@text,'$string3')]"),
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
-            0
-        )
-
         println("Element1 '$string1': location[${element1.location}] | size[${element1.size}]")
         println("Element1 '$string2': location[${element2.location}] | size[${element2.size}]")
-        println("Element1 '$string3': location[${element3.location}] | size[${element3.size}]")
     }
 
 

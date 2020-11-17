@@ -53,7 +53,7 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
      */
     protected open fun waitForScreenToLoad(elementArray: Array<MobileElement>) {
         AppiumUtil.waitForElementsToBeClickable(
-            driver,
+            driver!!,
             elementArray,
             DEFAULT_SCREEN_WAIT_TIME_IN_MILL
         )
@@ -64,7 +64,7 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
      */
     protected open fun waitForScreenToLoad(elementArray: Array<By>) {
         AppiumUtil.waitForElementsToBeClickable(
-            driver,
+            driver!!,
             elementArray,
             DEFAULT_SCREEN_WAIT_TIME_IN_MILL
         )
@@ -72,19 +72,19 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
 
 
     protected fun isElementShowing(locator: By): Boolean {
-        return if (!elementExists(locator)) false else AppiumUtil.waitForPresenceOfElement(driver, locator, 2000)
+        return if (!elementExists(locator)) false else AppiumUtil.waitForPresenceOfElement(driver!!, locator, 2000)
             .isDisplayed()
         // low timeout because the element exists
     }
 
     protected fun elementExists(locator: By): Boolean {
-        return AppiumUtil.elementExists(driver, locator, 1000)
+        return AppiumUtil.elementExists(driver!!, locator, 1000)
     }
 
 
     protected fun waitForPresenceOfElementLocated(locator: By): MobileElement {
         return AppiumUtil.waitForPresenceOfElement(
-            driver,
+            driver!!,
             locator,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
@@ -92,7 +92,7 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
 
     protected fun waitForElementToBeClickable(element: MobileElement): MobileElement {
         return AppiumUtil.waitForElementToBeClickable(
-            driver,
+            driver!!,
             element,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
@@ -100,7 +100,7 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
 
     protected fun waitForElementToBeClickable(locator: By): MobileElement {
         return AppiumUtil.waitForElementToBeClickable(
-            driver,
+            driver!!,
             locator,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
             0
@@ -112,7 +112,7 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
         childLocator: By
     ): MobileElement {
         return AppiumUtil.waitForElementToBeClickable(
-            driver,
+            driver!!,
             parent,
             childLocator,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
@@ -120,11 +120,11 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
     }
 
     protected fun waitForInvisibilityOf(locator: By) {
-        AppiumUtil.waitForInvisibilityOf(driver, locator, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+        AppiumUtil.waitForInvisibilityOf(driver!!, locator, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
     protected fun waitForInvisibilityOf(element: MobileElement) {
-        AppiumUtil.waitForInvisibilityOf(driver, element, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+        AppiumUtil.waitForInvisibilityOf(driver!!, element, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
 
@@ -145,9 +145,9 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
     protected fun clearElementValue(element: MobileElement) {
         element.clear()
         element.sendKeys("")
-        AppiumUtil.waitForElementTextToBe(driver, element, "", DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+        AppiumUtil.waitForElementTextToBe(driver!!, element, "", DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
         AppiumUtil.waitForElementAttributeToBe(
-            driver,
+            driver!!,
             element,
             "value",
             "",

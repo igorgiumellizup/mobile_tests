@@ -16,21 +16,105 @@
 
 package br.com.zup.beagle.utils
 
-import br.com.zup.beagle.setup.SuiteSetup
 import io.appium.java_client.MobileDriver
 import io.appium.java_client.MobileElement
+import io.appium.java_client.android.AndroidDriver
+import io.appium.java_client.android.AndroidTouchAction
 import io.appium.java_client.functions.ExpectedCondition
+import io.appium.java_client.touch.WaitOptions
+import io.appium.java_client.touch.offset.PointOption
 import org.openqa.selenium.*
-
+import org.openqa.selenium.NoSuchElementException
+import org.openqa.selenium.interactions.touch.TouchActions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.FluentWait
 import java.time.Duration
+import java.util.*
 
 
 object AppiumUtil {
 
+    // source: http://appium.io/docs/en/commands/interactions/touch/scroll/
     @Synchronized
-    fun waitForPresenceOfElement(driver: MobileDriver<*>?, locator: By, timeoutInMilliseconds: Long): MobileElement {
+    fun scrollToElement(driver: MobileDriver<*>, element: MobileElement): MobileElement {
+        val action = TouchActions(driver)
+        action.scroll(element, 10, 100)
+        action.perform()
+        return element
+    }
+
+    @Synchronized
+    fun swipeScreenTo(driver: MobileDriver<*>, swipeDirection: SwipeDirection) {
+        if (driver is AndroidDriver<*>)
+            androidSwipeScreenTo(driver, swipeDirection)
+        else
+            iosSwipeScreenTo(driver, swipeDirection)
+    }
+
+    /**
+     *
+     * Performs swipe from the center of screen
+     * Adapted from http://appium.io/docs/en/writing-running-appium/tutorial/swipe/ios-mobile-screen/
+     */
+    private fun iosSwipeScreenTo(driver: MobileDriver<*>, swipeDirection: SwipeDirection) {
+
+        val ANIMATION_TIME = 200 // ms
+        val scrollObject = HashMap<String, String>()
+        when (swipeDirection) {
+            SwipeDirection.DOWN -> scrollObject["direction"] = "down"
+            SwipeDirection.UP -> scrollObject["direction"] = "up"
+            SwipeDirection.LEFT -> scrollObject["direction"] = "left"
+            SwipeDirection.RIGHT -> scrollObject["direction"] = "right"
+            else -> throw IllegalArgumentException("mobileSwipeScreenIOS(): dir: '$swipeDirection' NOT supported")
+        }
+
+        (driver as JavascriptExecutor).executeScript("mobile:swipe", scrollObject)
+        //driver.execute("mobile:swipe", scrollObject)
+
+        Thread.sleep(ANIMATION_TIME.toLong()) // always allow swipe action to complete
+    }
+
+
+    /**
+     *
+     * Performs swipe from the center of screen
+     * Adapted from http://appium.io/docs/en/writing-running-appium/tutorial/swipe/simple-screen/
+     */
+    private fun androidSwipeScreenTo(driver: MobileDriver<*>, swipeDirection: SwipeDirection) {
+
+        val ANIMATION_TIME = 200 // ms
+        val PRESS_TIME = 200 // ms
+        val EDGE_BORDER = 10 // better avoid edges
+        val pointOptionStart: PointOption<*>
+        val pointOptionEnd: PointOption<*>
+
+        // init screen variables
+        val dims: Dimension = driver.manage().window().getSize()
+
+        // init start point = center of screen
+        pointOptionStart = PointOption.point(dims.width / 2, dims.height / 2)
+        pointOptionEnd = when (swipeDirection) {
+            SwipeDirection.DOWN -> PointOption.point(dims.width / 2, dims.height - EDGE_BORDER)
+            SwipeDirection.UP -> PointOption.point(dims.width / 2, EDGE_BORDER)
+            SwipeDirection.LEFT -> PointOption.point(EDGE_BORDER, dims.height / 2)
+            SwipeDirection.RIGHT -> PointOption.point(dims.width - EDGE_BORDER, dims.height / 2)
+            else -> throw IllegalArgumentException("swipeScreen(): dir: '$swipeDirection' NOT supported")
+        }
+
+        // execute swipe using TouchAction
+        AndroidTouchAction(driver)
+            .press(pointOptionStart) // a bit more reliable when we add small wait
+            .waitAction(WaitOptions.waitOptions(Duration.ofMillis(PRESS_TIME.toLong())))
+            .moveTo(pointOptionEnd)
+            .release().perform()
+
+
+        Thread.sleep(ANIMATION_TIME.toLong())
+
+    }
+
+    @Synchronized
+    fun waitForPresenceOfElement(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): MobileElement {
         val wait: FluentWait<MobileDriver<*>> = FluentWait<MobileDriver<*>>(driver)
         wait.pollingEvery(Duration.ofMillis(500))
         wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
@@ -41,7 +125,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementToBeClickable(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         parent: MobileElement,
         childLocator: By,
         timeoutInMilliseconds: Long
@@ -57,7 +141,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementToBeClickable(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         locator: By,
         timeoutInMilliseconds: Long,
         intervalInMilliseconds: Long
@@ -74,7 +158,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementToBeClickable(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         element: MobileElement,
         timeoutInMilliseconds: Long
     ): MobileElement {
@@ -89,7 +173,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementsToBeClickable(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         elements: Array<MobileElement>,
         timeoutInMilliseconds: Long
     ) {
@@ -100,7 +184,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementsToBeClickable(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         locators: Array<By>,
         timeoutInMilliseconds: Long
     ) {
@@ -112,7 +196,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementTextToBe(
-        driver: MobileDriver<*>?, element: MobileElement, text: String,
+        driver: MobileDriver<*>, element: MobileElement, text: String,
         timeoutInMilliseconds: Long
     ): Boolean {
         val wait = FluentWait(driver)
@@ -124,7 +208,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementAttributeToBe(
-        driver: MobileDriver<*>?, element: MobileElement, attribute: String, value: String,
+        driver: MobileDriver<*>, element: MobileElement, attribute: String, value: String,
         timeoutInMilliseconds: Long
     ): Boolean {
         val wait = FluentWait(driver)
@@ -136,7 +220,7 @@ object AppiumUtil {
 
 
     @Synchronized
-    fun waitForInvisibilityOf(driver: MobileDriver<*>?, locator: By, timeoutInMilliseconds: Long): Boolean {
+    fun waitForInvisibilityOf(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): Boolean {
         val wait = FluentWait(driver)
         wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
         wait.pollingEvery(Duration.ofMillis(500))
@@ -145,7 +229,7 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForInvisibilityOf(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         element: MobileElement,
         timeoutInMilliseconds: Long
     ): Boolean {
@@ -176,7 +260,7 @@ object AppiumUtil {
     }
 
     @Synchronized
-    fun elementExists(driver: MobileDriver<*>?, locator: By, timeoutInMilliseconds: Long): Boolean {
+    fun elementExists(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): Boolean {
         try {
             waitForPresenceOfElement(driver, locator, timeoutInMilliseconds)
             return true // element found
@@ -191,7 +275,7 @@ object AppiumUtil {
      */
     @Synchronized
     fun setElementValue(
-        driver: MobileDriver<*>?,
+        driver: MobileDriver<*>,
         element: MobileElement,
         value: String,
         timeoutInMilliseconds: Long
@@ -215,18 +299,18 @@ object AppiumUtil {
      * returns true if element1 is above element2
      */
     @Synchronized
-    fun isElementAboveElement(element1: MobileElement, element2: MobileElement): Boolean{
+    fun isElementAboveElement(element1: MobileElement, element2: MobileElement): Boolean {
         var element1LocationY: Int = element1.location.y // + element1.size.height
         var element2LocationY: Int = element2.location.y
 
         if (element2LocationY > element1LocationY)
             return true
-        
+
         return false
     }
 
     @Synchronized
-    fun getPropertyXpath(property: String?, propertyValue: String?, likeSearch: Boolean, ignoreCase: Boolean): By {
+    fun getPropertyXpath(property: String, propertyValue: String, likeSearch: Boolean, ignoreCase: Boolean): By {
         val xpath: By
 
         if (ignoreCase) {

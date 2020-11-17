@@ -33,10 +33,10 @@ object SuiteSetup {
     private var bffBaseUrl: String? = null
 
 
-    fun getDriver(): AppiumDriver<*>? {
+    fun getDriver(): AppiumDriver<*> {
 
         if (driver != null)
-            return driver
+            return driver!!
 
         if (platform == null) {
             platform = System.getProperty("platform") // command-line argument
@@ -52,7 +52,7 @@ object SuiteSetup {
         }
 
         initDriver()
-        return driver
+        return driver!!
     }
 
     fun isAndroid(): Boolean {
@@ -63,8 +63,8 @@ object SuiteSetup {
         return platform.equals("ios", ignoreCase = true)
     }
 
-    fun getBffBaseUrl(): String? {
-        return bffBaseUrl
+    fun getBffBaseUrl(): String {
+        return bffBaseUrl!!
     }
 
     private fun initDriver() {

@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-package br.com.zup.beagle.cucumber.steps
+package br.com.zup.beagle.utils
 
-import io.cucumber.junit.Cucumber
-import io.cucumber.junit.CucumberOptions
-import org.junit.runner.RunWith
-
-/**
- * Used for debugging since cucumber task in gradle.build won't hit breakpoints.
- * Must be in the steps folder
- */
-@RunWith(Cucumber::class)
-@CucumberOptions(
-    tags = "@pageview",
-    features = ["src/test/resources/features"],
-    plugin = ["br.com.zup.beagle.cucumber.CustomEvent"]
-)
-class Runner {
+enum class SwipeDirection {
+    UP, DOWN, LEFT, RIGHT
 }
