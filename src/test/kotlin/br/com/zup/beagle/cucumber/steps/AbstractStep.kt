@@ -24,6 +24,7 @@ import br.com.zup.beagle.utils.SwipeDirection
 import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileElement
 import org.openqa.selenium.By
+import org.openqa.selenium.ScreenOrientation
 
 
 abstract class AbstractStep {
@@ -112,19 +113,21 @@ abstract class AbstractStep {
 
     }
 
-    protected fun scrollToElementWithText(
+    protected fun scrollDownToElementWithText(
         elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
-    ): MobileElement {
+    ) {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
+
+        // since the element might not be visible until scrolled to, should wait for presence, not visibility
         val element: MobileElement = AppiumUtil.waitForPresenceOfElement(
             getDriver(),
             xpath,
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
 
-        return AppiumUtil.scrollToElement(getDriver(), element)
+        AppiumUtil.scrollToElement(getDriver(), element, SwipeDirection.DOWN, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
     protected fun hideKeyboard() {
@@ -166,6 +169,14 @@ abstract class AbstractStep {
 
     protected fun swipeDown() {
         AppiumUtil.swipeScreenTo(getDriver(), SwipeDirection.DOWN)
+    }
+
+    protected fun rotateToLandscapePosition() {
+        getDriver().rotate(ScreenOrientation.LANDSCAPE);
+    }
+
+    protected fun rotateToPortraitPosition() {
+        getDriver().rotate(ScreenOrientation.PORTRAIT);
     }
 
 

@@ -25,7 +25,6 @@ import io.appium.java_client.touch.WaitOptions
 import io.appium.java_client.touch.offset.PointOption
 import org.openqa.selenium.*
 import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.interactions.touch.TouchActions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.FluentWait
 import java.time.Duration
@@ -34,13 +33,42 @@ import java.util.*
 
 object AppiumUtil {
 
-    // source: http://appium.io/docs/en/commands/interactions/touch/scroll/
     @Synchronized
-    fun scrollToElement(driver: MobileDriver<*>, element: MobileElement): MobileElement {
-        val action = TouchActions(driver)
-        action.scroll(element, 10, 100)
-        action.perform()
-        return element
+    fun scrollToElement(
+        driver: MobileDriver<*>,
+        element: MobileElement,
+        direction: SwipeDirection,
+        timeoutInMilliseconds: Long
+    ): MobileElement {
+
+        val wait = FluentWait(driver)
+        wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
+        return wait.until(ExpectedCondition<MobileElement> {
+            if (!element.isDisplayed) {
+                swipeScreenTo(driver, direction)
+                return@ExpectedCondition null;
+            } else
+                return@ExpectedCondition element
+        })
+
+
+        //val action = TouchActions(driver)
+        //action.scroll(element, 10, 100)
+        //action.perform()
+
+        //val actions = Actions(driver)
+        // actions.
+
+        //var androidActions = AndroidTouchAction(driver)
+        // androidActions.
+
+        /*
+        val scrollObject = HashMap<String, String>()
+        scrollObject["direction"] = "$direction"
+        scrollObject["element"] = (element as RemoteWebElement).id
+        print(scrollObject)
+        (driver as JavascriptExecutor).executeScript("mobile: scroll", scrollObject)
+         */
     }
 
     @Synchronized

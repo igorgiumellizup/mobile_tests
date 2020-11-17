@@ -71,25 +71,6 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
     }
 
 
-    protected fun isElementShowing(locator: By): Boolean {
-        return if (!elementExists(locator)) false else AppiumUtil.waitForPresenceOfElement(driver!!, locator, 2000)
-            .isDisplayed()
-        // low timeout because the element exists
-    }
-
-    protected fun elementExists(locator: By): Boolean {
-        return AppiumUtil.elementExists(driver!!, locator, 1000)
-    }
-
-
-    protected fun waitForPresenceOfElementLocated(locator: By): MobileElement {
-        return AppiumUtil.waitForPresenceOfElement(
-            driver!!,
-            locator,
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
-        )
-    }
-
     protected fun waitForElementToBeClickable(element: MobileElement): MobileElement {
         return AppiumUtil.waitForElementToBeClickable(
             driver!!,
@@ -153,9 +134,5 @@ abstract class AbstractScreen(mobileDriver: AppiumDriver<*>?) {
             "",
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
-    }
-
-    protected fun clearElementValue(locator: By) {
-        clearElementValue(waitForElementToBeClickable(locator))
     }
 }

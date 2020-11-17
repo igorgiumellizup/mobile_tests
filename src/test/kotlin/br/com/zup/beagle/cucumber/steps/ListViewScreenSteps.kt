@@ -60,6 +60,6 @@ class ListViewScreenSteps : AbstractStep() {
     @Then("^listview screen should perform the scroll action vertically$")
     fun validateVerticalListScroll() {
         // ScreenRobot().scrollTo(DYNAMIC_LISTVIEW_TEXT_2).sleep(2)
-        scrollToElementWithText(DYNAMIC_LISTVIEW_TEXT_2, false, false)
+        scrollDownToElementWithText(DYNAMIC_LISTVIEW_TEXT_2, false, false)
     }
 }

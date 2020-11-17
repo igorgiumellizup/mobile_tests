@@ -35,7 +35,7 @@ class GenericSteps : AbstractStep() {
     @When("^Scroll to (.*)$")
     fun scrollTo(string1: String?) {
         //ScreenRobot().scrollTo(string1)
-        scrollToElementWithText(string1!!, false, true)
+        scrollDownToElementWithText(string1!!, false, true)
     }
 
     @Then("^The Text should show (.*)$")
