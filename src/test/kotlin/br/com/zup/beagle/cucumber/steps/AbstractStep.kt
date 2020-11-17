@@ -118,6 +118,23 @@ abstract class AbstractStep {
         likeSearch: Boolean,
         ignoreCase: Boolean
     ) {
+        scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.DOWN)
+    }
+
+    protected fun scrollLeftToElementWithText(
+        elementText: String,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ) {
+        scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.LEFT)
+    }
+
+    private fun scrollToElement(
+        elementText: String,
+        likeSearch: Boolean,
+        ignoreCase: Boolean,
+        direction: SwipeDirection
+    ) {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
 
         // since the element might not be visible until scrolled to, should wait for presence, not visibility
@@ -127,7 +144,7 @@ abstract class AbstractStep {
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
 
-        AppiumUtil.scrollToElement(getDriver(), element, SwipeDirection.DOWN, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+        AppiumUtil.scrollToElement(getDriver(), element, direction, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
     protected fun hideKeyboard() {
