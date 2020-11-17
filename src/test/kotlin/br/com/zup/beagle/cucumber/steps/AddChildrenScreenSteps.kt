@@ -40,7 +40,7 @@ class AddChildrenScreenSteps : AbstractStep() {
     @Given("^that I'm on the addChildren Screen$")
     fun checkImageScreen() {
         //ScreenRobot().checkViewContainsText(ADD_CHILDREN_HEADER, true)
-        Assert.assertTrue(screenContainsElementWithText(ADD_CHILDREN_HEADER, false, false))
+        waitForElementToBeClickable(ADD_CHILDREN_HEADER, false, false)
     }
 
     @Then("^A Text needs to be added after the already existing one$")
