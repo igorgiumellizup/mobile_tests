@@ -20,7 +20,6 @@ import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import org.junit.Assert
 
 
 class AlertScreenSteps : AbstractStep() {
@@ -56,8 +55,8 @@ class AlertScreenSteps : AbstractStep() {
         //ScreenRobot()
         //  .checkViewContainsText(string, true)
         // .checkViewContainsText(string2, true)
-        Assert.assertTrue(screenContainsElementWithText(string, false, false))
-        Assert.assertTrue(screenContainsElementWithText(string2, false, false))
+        waitForElementWithTextToBeClickable(string, false, false)
+        waitForElementWithTextToBeClickable(string2, false, false)
     }
 
     @Then("^I press the confirmation (.*) button on the alert$")
@@ -69,6 +68,6 @@ class AlertScreenSteps : AbstractStep() {
     @Then("^an alert with a confirmation button with (.*) label should appear$")
     fun checkAlertConfirmationButtonLabelIsSetWithText(string: String) {
         //ScreenRobot().checkViewContainsText(string)
-        Assert.assertTrue(screenContainsElementWithText(string, false, true))
+        waitForElementWithTextToBeClickable(string, false, false)
     }
 }

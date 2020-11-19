@@ -66,7 +66,7 @@ class NavigateScreenSteps : AbstractStep() {
     @Then("^the screen should not navigate to another screen with the text label (.*)$")
     fun checkGlobalTextScreenIsNotOnView(string2: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string2)
-        Assert.assertFalse(screenContainsElementWithText(string2, false, false))
+        waitForInvisibilityOfElementWithText(string2, false, false)
     }
 
     @Then("^the app should dismiss the view that contains (.*)$")

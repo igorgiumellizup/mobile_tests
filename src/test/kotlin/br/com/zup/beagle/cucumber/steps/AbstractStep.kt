@@ -76,6 +76,7 @@ abstract class AbstractStep {
     }
 
     // no android não funciona, tudo por lá é 'text'. Verificar no iOS
+    @Deprecated(message = "hint properly is not accessible anymore. Use waitForElementWithTextToBeClickable instead")
     protected fun waitForElementWithHintToBeClickable(
         elementHint: String,
         likeSearch: Boolean,
@@ -94,24 +95,6 @@ abstract class AbstractStep {
     protected fun waitForInvisibilityOfElementWithText(elementText: String, likeSearch: Boolean, ignoreCase: Boolean) {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
         AppiumUtil.waitForInvisibilityOf(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
-    }
-
-    protected fun screenContainsElementWithText(
-        elementText: String,
-        likeSearch: Boolean,
-        ignoreCase: Boolean
-    ): Boolean {
-        return screenContainsElementWithText(elementText, likeSearch, ignoreCase, 2000)
-    }
-
-    private fun screenContainsElementWithText(
-        elementText: String,
-        likeSearch: Boolean,
-        ignoreCase: Boolean,
-        timeout: Long
-    ): Boolean {
-        val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
-        return AppiumUtil.elementExists(getDriver(), xpath, timeout)
     }
 
     protected fun scrollDownToElementWithText(

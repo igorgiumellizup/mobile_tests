@@ -16,21 +16,19 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import org.junit.Assert
 
+private const val ADD_CHILDREN_HEADER = "Add Children"
+private const val TEXT_FIXED = "I'm the single text on screen"
+private const val TEXT_ADDED = "New text added"
+
 @Suppress("unused")
 class AddChildrenScreenSteps : AbstractStep() {
 
     override var bffRelativeUrlPath = "/add-children"
-    private val ADD_CHILDREN_HEADER = "Add Children"
-    private val TEXT_FIXED = "I'm the single text on screen"
-    private val TEXT_ADDED = "New text added"
-    //private val CONTAINER_ID = "containerId"
-
 
     @Before("@addChildren")
     fun setup() {
@@ -65,7 +63,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         //onView((withText(TEXT_ADDED))).check(matches(isDisplayed()))
         //onView(withId(CONTAINER_ID.toAndroidId())).check(matches(not(withText(TEXT_FIXED))))
         waitForAddedText()
-        Assert.assertFalse(screenContainsElementWithText(TEXT_FIXED, false, false))
+        waitForInvisibilityOfElementWithText(TEXT_FIXED, false, false)
     }
 
     @Then("^Nothing should happen$")
@@ -74,7 +72,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         //onView((withText(TEXT_FIXED))).check(matches(isDisplayed()))
         //onView(withId(CONTAINER_ID.toAndroidId())).check(matches(not(withText(TEXT_ADDED))))
         waitForFixedText()
-        Assert.assertFalse(screenContainsElementWithText(TEXT_ADDED, false, false))
+        waitForInvisibilityOfElementWithText(TEXT_ADDED, false, false)
     }
 
     private fun waitForFixedAndAddedTexts() {
