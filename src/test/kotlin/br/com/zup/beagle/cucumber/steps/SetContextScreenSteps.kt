@@ -21,31 +21,30 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
-class ConditionalScreenSteps : AbstractStep() {
-    override var bffRelativeUrlPath = "/conditional"
+class SetContextScreenSteps: AbstractStep() {
+    override var bffRelativeUrlPath = "/set-context"
 
-    @Before("@conditional")
+    @Before("@setcontext")
     fun setup() {
-        // TestUtils.startActivity(activityTestRule, CONDITIONAL_SCREEN_BFF_URL)
+        //TestUtils.startActivity(activityTestRule, ALERT_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 
-    @Given("^the Beagle application did launch with the conditional screen url$")
+    @Given("^the Beagle application did launch with the SetContext screen url$")
     fun checkBaseScreen() {
-        // ScreenRobot().checkViewContainsText("Conditional Screen", true)
-        waitForElementWithTextToBeClickable("Conditional Screen", false, false)
+        // ScreenRobot().checkViewContainsText("SetContext Screen", true)
+        waitForElementWithTextToBeClickable("SetContext Screen", false,false)
     }
 
-    @When("^I click in a conditional button with (.*) title$")
-    fun clickOnButton(string: String) {
+    @When("^I press a SetContext button with the (.*) title$")
+    fun clickOnButton(string:String) {
         // ScreenRobot().clickOnText(string)
         waitForElementWithTextToBeClickable(string, false, false).click()
     }
 
-    @Then("^an Alert action should pop up with a (.*) message$")
-    fun checkGlobalTextScreen(string2: String) {
-        // ScreenRobot().checkViewContainsText(string2, true)
-        waitForElementWithTextToBeClickable(string2, false, false)
+    @Then("^a text with the (.*) message should appear on the screen$")
+    fun checkAlertMessage(string:String) {
+        // ScreenRobot().checkViewContainsText(string, true)
+        waitForElementWithTextToBeClickable(string, false,false)
     }
-
 }

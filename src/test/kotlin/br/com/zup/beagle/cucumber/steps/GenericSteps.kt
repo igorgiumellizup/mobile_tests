@@ -26,34 +26,33 @@ class GenericSteps : AbstractStep() {
     override var bffRelativeUrlPath = ""
 
     @When("^I click on button (.*)$")
-    fun clickOnButton(string1: String?) {
+    fun clickOnButton(string1: String) {
         //ScreenRobot().clickOnText(string1)
-        clickOnElementWithText(string1!!, false, true)
-
+        waitForElementWithTextToBeClickable(string1, false, true).click()
     }
 
     @When("^Scroll to (.*)$")
-    fun scrollTo(string1: String?) {
+    fun scrollTo(string1: String) {
         //ScreenRobot().scrollTo(string1)
-        scrollDownToElementWithText(string1!!, false, true)
+        scrollDownToElementWithText(string1, false, true).click()
     }
 
     @Then("^The Text should show (.*)$")
-    fun textShouldShow(string1: String?) {
+    fun textShouldShow(string1: String) {
         //ScreenRobot().checkViewContainsText(string1)
-        Assert.assertTrue(screenContainsElementWithText(string1!!, false, true))
+        waitForElementWithTextToBeClickable(string1, false, true)
     }
 
     @When("^I click on text (.*)$")
-    fun clickOnText(string1: String?) {
+    fun clickOnText(string1: String) {
         //ScreenRobot().clickOnText(string1)
-        clickOnElementWithText(string1!!, false, true)
+        waitForElementWithTextToBeClickable(string1, false, true)
     }
 
     @When("^I click on input with hint (.*)$")
-    fun clickOnInputWithHint(hint: String?) {
+    fun clickOnInputWithHint(hint: String) {
         //ScreenRobot().clickOnInputWithHint(hint)
-        clickOnElementWithHint(hint!!, false, true)
+        waitForElementWithTextToBeClickable(hint, false, true)
     }
 
     @When("hide keyboard")

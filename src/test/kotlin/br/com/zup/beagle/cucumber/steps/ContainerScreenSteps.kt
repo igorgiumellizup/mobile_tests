@@ -33,7 +33,7 @@ class ContainerScreenSteps : AbstractStep() {
     @Given("^the Beagle application did launch with the container screen url$")
     fun checkBaseScreen() {
         // ScreenRobot().checkViewContainsText("Container Screen", true)
-        waitForElementToBeClickable("Container Screen", false, false)
+        waitForElementWithTextToBeClickable("Container Screen", false, false)
     }
 
     @Then("^the view that contains the texts with titles (.*) (.*) and (.*) must be displayed$")
@@ -44,15 +44,15 @@ class ContainerScreenSteps : AbstractStep() {
             .checkViewContainsText(string2, true)
             .checkViewContainsText(string3, true)
          */
-        waitForElementToBeClickable(string1, false, false)
-        waitForElementToBeClickable(string2, false, false)
-        waitForElementToBeClickable(string3, false, false)
+        waitForElementWithTextToBeClickable(string1, false, false)
+        waitForElementWithTextToBeClickable(string2, false, false)
+        waitForElementWithTextToBeClickable(string3, false, false)
     }
 
     @Then("^the views that contains the text (.*) set via context must be displayed$")
     fun checkTextExistsInAViewSetViaContext(string1:String) {
         // ScreenRobot().checkViewContainsText(string1, true)
-        waitForElementToBeClickable(string1, false, false)
+        waitForElementWithTextToBeClickable(string1, false, false)
     }
 
 

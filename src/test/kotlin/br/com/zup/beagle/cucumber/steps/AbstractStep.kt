@@ -60,12 +60,28 @@ abstract class AbstractStep {
         return AppiumUtil.getPropertyXpath("hint", elementHint, likeSearch, ignoreCase)
     }
 
-    protected fun waitForElementToBeClickable(
+    protected fun waitForElementWithTextToBeClickable(
         elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): MobileElement {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
+        return AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            xpath,
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
+            0
+        )
+
+    }
+
+    // no android não funciona, tudo por lá é 'text'. Verificar no iOS
+    protected fun waitForElementWithHintToBeClickable(
+        elementHint: String,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ): MobileElement {
+        val xpath: By = getSearchByHintXpath(elementHint, likeSearch, ignoreCase)
         return AppiumUtil.waitForElementToBeClickable(
             getDriver(),
             xpath,
@@ -88,7 +104,7 @@ abstract class AbstractStep {
         return screenContainsElementWithText(elementText, likeSearch, ignoreCase, 2000)
     }
 
-    protected fun screenContainsElementWithText(
+    private fun screenContainsElementWithText(
         elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean,
@@ -98,35 +114,20 @@ abstract class AbstractStep {
         return AppiumUtil.elementExists(getDriver(), xpath, timeout)
     }
 
-    protected fun clickOnElementWithText(elementText: String, likeSearch: Boolean, ignoreCase: Boolean) {
-        waitForElementToBeClickable(elementText, likeSearch, ignoreCase).click()
-
-    }
-
-    protected fun clickOnElementWithHint(hintText: String, likeSearch: Boolean, ignoreCase: Boolean) {
-        AppiumUtil.waitForElementToBeClickable(
-            getDriver(),
-            getSearchByHintXpath(hintText, likeSearch, ignoreCase),
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
-            0
-        ).click()
-
-    }
-
     protected fun scrollDownToElementWithText(
         elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
-    ) {
-        scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.DOWN)
+    ): MobileElement {
+        return scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.DOWN)
     }
 
     protected fun scrollLeftToElementWithText(
         elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
-    ) {
-        scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.LEFT)
+    ): MobileElement {
+        return scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.LEFT)
     }
 
     private fun scrollToElement(
@@ -134,7 +135,7 @@ abstract class AbstractStep {
         likeSearch: Boolean,
         ignoreCase: Boolean,
         direction: SwipeDirection
-    ) {
+    ): MobileElement {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
 
         // since the element might not be visible until scrolled to, should wait for presence, not visibility
@@ -144,7 +145,7 @@ abstract class AbstractStep {
             DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
         )
 
-        AppiumUtil.scrollToElement(getDriver(), element, direction, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+        return AppiumUtil.scrollToElement(getDriver(), element, direction, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
     protected fun hideKeyboard() {
@@ -160,8 +161,8 @@ abstract class AbstractStep {
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): Boolean {
-        val element1: MobileElement = waitForElementToBeClickable(elementText1, likeSearch, ignoreCase)
-        val element2: MobileElement = waitForElementToBeClickable(elementText2, likeSearch, ignoreCase)
+        val element1: MobileElement = waitForElementWithTextToBeClickable(elementText1, likeSearch, ignoreCase)
+        val element2: MobileElement = waitForElementWithTextToBeClickable(elementText2, likeSearch, ignoreCase)
         return AppiumUtil.isElementAboveElement(element1, element2)
     }
 

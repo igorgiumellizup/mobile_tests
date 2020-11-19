@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-@listview @android @ios
+@listview @android @ios @inProgress
 Feature: ListView Component Validation
 
     As a Beagle developer/user

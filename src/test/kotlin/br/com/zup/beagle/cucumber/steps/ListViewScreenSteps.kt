@@ -16,11 +16,16 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.steps.constants.*
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+
+private const val LISTVIEW_SCREEN_HEADER = "Beagle ListView"
+private const val STATIC_LISTVIEW_TEXT_1 = "Static VERTICAL ListView"
+private const val STATIC_LISTVIEW_TEXT_2 = "Static HORIZONTAL ListView"
+private const val DYNAMIC_LISTVIEW_TEXT_1 = "Dynamic VERTICAL ListView"
+private const val DYNAMIC_LISTVIEW_TEXT_2 = "Dynamic HORIZONTAL ListView"
 
 class ListViewScreenSteps : AbstractStep() {
     override var bffRelativeUrlPath = "/listview"
@@ -31,16 +36,17 @@ class ListViewScreenSteps : AbstractStep() {
         loadBffScreenFromMainScreen()
     }
 
+
     @Given("^that I'm on the listview screen$")
     fun checkListViewScreen() {
         // ScreenRobot().checkViewContainsText(LISTVIEW_SCREEN_HEADER, true)
-        waitForElementToBeClickable(LISTVIEW_SCREEN_HEADER, false, false)
+        waitForElementWithTextToBeClickable(LISTVIEW_SCREEN_HEADER, false, false)
     }
 
     @When("^I have a vertical list configured$")
     fun checkVerticalListText() {
         // ScreenRobot().checkViewContainsText(STATIC_LISTVIEW_TEXT_1).sleep(2)
-        waitForElementToBeClickable(STATIC_LISTVIEW_TEXT_1, false, false)
+        waitForElementWithTextToBeClickable(STATIC_LISTVIEW_TEXT_1, false, false)
     }
 
     @Then("^listview screen should render all text attributes correctly$")
@@ -52,9 +58,9 @@ class ListViewScreenSteps : AbstractStep() {
             .checkViewContainsText(DYNAMIC_LISTVIEW_TEXT_1)
 
          */
-        waitForElementToBeClickable(STATIC_LISTVIEW_TEXT_1, false, false)
-        waitForElementToBeClickable(STATIC_LISTVIEW_TEXT_2, false, false)
-        waitForElementToBeClickable(DYNAMIC_LISTVIEW_TEXT_1, false, false)
+        waitForElementWithTextToBeClickable(STATIC_LISTVIEW_TEXT_1, false, false)
+        waitForElementWithTextToBeClickable(STATIC_LISTVIEW_TEXT_2, false, false)
+        waitForElementWithTextToBeClickable(DYNAMIC_LISTVIEW_TEXT_1, false, false)
     }
 
     @Then("^listview screen should perform the scroll action vertically$")

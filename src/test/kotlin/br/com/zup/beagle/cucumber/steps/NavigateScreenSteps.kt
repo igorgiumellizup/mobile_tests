@@ -16,7 +16,6 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-import io.cucumber.java.AfterStep
 import io.cucumber.java.Before
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
@@ -37,31 +36,31 @@ class NavigateScreenSteps : AbstractStep() {
     @Given("^the Beagle application did launch with the navigation screen url$")
     fun checkBaseScreen() {
         // ScreenRobot().checkViewContainsText("Navigation Screen", true)
-        waitForElementToBeClickable("Navigation Screen", false, false)
+        waitForElementWithTextToBeClickable("Navigation Screen", false, false)
     }
 
     @When("^I press a navigation button (.*)$")
     fun clickOnButton(string: String) {
         // ScreenRobot().clickOnText(string)
-        clickOnElementWithText(string, false, false)
+        waitForElementWithTextToBeClickable(string, false, false).click()
     }
 
     @When("^I press a navigation failure button (.*)$")
     fun clickOnButtonFailure(string: String) {
         // ScreenRobot().clickOnText(string)
-        clickOnElementWithText(string, false, false)
+        waitForElementWithTextToBeClickable(string, false, false).click()
     }
 
     @And("^I click on (.*) button$")
     fun clickOnPoPButton(string: String) {
         // ScreenRobot().clickOnText(string)
-        clickOnElementWithText(string, false, false)
+        waitForElementWithTextToBeClickable(string, false, false).click()
     }
 
     @Then("^the screen should navigate to another screen with the text label (.*)$")
     fun checkGlobalTextScreen(string2: String) {
         // ScreenRobot().checkViewContainsText(string2, true)
-        waitForElementToBeClickable(string2, false, false)
+        waitForElementWithTextToBeClickable(string2, false, false)
     }
 
     @Then("^the screen should not navigate to another screen with the text label (.*)$")
@@ -80,12 +79,12 @@ class NavigateScreenSteps : AbstractStep() {
     @Then("^the view that contains the (.*) must still exist$")
     fun checkTextExistsInAView(string2: String) {
         // ScreenRobot().checkViewContainsText(string2, true)
-        waitForElementToBeClickable(string2, false, false)
+        waitForElementWithTextToBeClickable(string2, false, false)
     }
 
     @Then("^There must be a retry button with text (.*)$")
     fun checkButtonExistsInAView(string2: String) {
         // ScreenRobot().checkViewContainsText(string2, true)
-        waitForElementToBeClickable(string2, false, false)
+        waitForElementWithTextToBeClickable(string2, false, false)
     }
 }

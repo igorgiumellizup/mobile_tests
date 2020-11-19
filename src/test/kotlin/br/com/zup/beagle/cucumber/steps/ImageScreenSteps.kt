@@ -16,14 +16,15 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.steps.constants.IMAGE_SCREEN_HEADER
-import br.com.zup.beagle.cucumber.steps.constants.IMAGE_TEXT_1
-import br.com.zup.beagle.cucumber.steps.constants.IMAGE_TEXT_2
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 
-class ImageScreenSteps: AbstractStep() {
+private const val IMAGE_SCREEN_HEADER = "Beagle Image"
+private const val IMAGE_TEXT_1 = "Image"
+private const val IMAGE_TEXT_2 = "Image with contentMode = FIT_XY"
+
+class ImageScreenSteps : AbstractStep() {
     override var bffRelativeUrlPath = "/image"
 
     @Before("@image")
@@ -35,7 +36,7 @@ class ImageScreenSteps: AbstractStep() {
     @Given("^that I'm on the image screen$")
     fun checkImageScreen() {
         //ScreenRobot().checkViewContainsText(IMAGE_SCREEN_HEADER, true)
-        waitForElementToBeClickable(IMAGE_SCREEN_HEADER, false, false)
+        waitForElementWithTextToBeClickable(IMAGE_SCREEN_HEADER, false, false)
     }
 
     @Then("^image screen should render all image attributes correctly$")
@@ -46,8 +47,8 @@ class ImageScreenSteps: AbstractStep() {
             .checkViewContainsText(IMAGE_TEXT_2)
             .scrollViewDown()
         */
-        waitForElementToBeClickable(IMAGE_TEXT_1, false, false)
-        waitForElementToBeClickable(IMAGE_TEXT_2, false, false)
+        waitForElementWithTextToBeClickable(IMAGE_TEXT_1, false, false)
+        waitForElementWithTextToBeClickable(IMAGE_TEXT_2, false, false)
 
     }
 }

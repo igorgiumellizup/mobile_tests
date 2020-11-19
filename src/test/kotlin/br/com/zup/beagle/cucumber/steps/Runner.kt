@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
  */
 @RunWith(Cucumber::class)
 @CucumberOptions(
-    tags = "@pageview",
+    tags = "@alert and not @inProgress",
     features = ["src/test/resources/features"],
     plugin = ["br.com.zup.beagle.cucumber.CustomEvent"]
 )

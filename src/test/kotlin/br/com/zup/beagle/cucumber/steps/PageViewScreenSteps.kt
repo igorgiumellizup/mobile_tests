@@ -16,13 +16,15 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.steps.constants.PAGEVIEW_SCREEN_HEADER
-import br.com.zup.beagle.cucumber.steps.constants.PAGE_1_TEXT
-import br.com.zup.beagle.cucumber.steps.constants.PAGE_2_TEXT
-import br.com.zup.beagle.cucumber.steps.constants.PAGE_3_TEXT
+
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
+
+private const val PAGEVIEW_SCREEN_HEADER = "Beagle PageView"
+private const val PAGE_1_TEXT = "Page 1"
+private const val PAGE_2_TEXT = "Page 2"
+private const val PAGE_3_TEXT = "Page 3"
 
 class PageViewScreenSteps : AbstractStep() {
     override var bffRelativeUrlPath = "/pageview"
@@ -36,7 +38,7 @@ class PageViewScreenSteps : AbstractStep() {
     @Given("^that I'm on the pageview screen$")
     fun checkTabViewScreen() {
         // ScreenRobot().checkViewContainsText(PAGEVIEW_SCREEN_HEADER, true)
-        waitForElementToBeClickable(PAGEVIEW_SCREEN_HEADER, false, false)
+        waitForElementWithTextToBeClickable(PAGEVIEW_SCREEN_HEADER, false, false)
     }
 
     @Then("^my pageview components should render their respective pages attributes correctly$")
@@ -53,11 +55,11 @@ class PageViewScreenSteps : AbstractStep() {
             .swipeRightOnView()
             .swipeRightOnView()
          */
-        waitForElementToBeClickable(PAGE_1_TEXT, false, false)
+        waitForElementWithTextToBeClickable(PAGE_1_TEXT, false, false)
         swipeLeft()
-        waitForElementToBeClickable(PAGE_2_TEXT, false, false)
+        waitForElementWithTextToBeClickable(PAGE_2_TEXT, false, false)
         swipeLeft()
-        waitForElementToBeClickable(PAGE_3_TEXT, false, false)
+        waitForElementWithTextToBeClickable(PAGE_3_TEXT, false, false)
 
     }
 

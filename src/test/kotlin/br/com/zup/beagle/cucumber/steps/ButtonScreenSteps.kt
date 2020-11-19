@@ -16,13 +16,18 @@
 
 package br.com.zup.beagle.cucumber.steps
 
-import br.com.zup.beagle.cucumber.steps.constants.*
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import org.junit.Assert
 
+
+private const val BUTTON_SCREEN_HEADER = "Beagle Button"
+private const val BUTTON_DEFAULT_TEXT = "Button"
+private const val BUTTON_WITH_STYLE_TEXT = "Button with style"
+private const val BUTTON_WITH_APPEARANCE_TEXT = "Button with Appearance"
+private const val ACTION_CLICK_HEADER = "Action Click"
+private const val ACTION_CLICK_TEXT = "You clicked right"
 
 class ButtonScreenSteps : AbstractStep() {
 
@@ -36,13 +41,13 @@ class ButtonScreenSteps : AbstractStep() {
     @Given("^that I'm on the button screen$")
     fun checkButtonScreen() {
         //ScreenRobot().checkViewContainsText(BUTTON_SCREEN_HEADER, true)
-        waitForElementToBeClickable(BUTTON_SCREEN_HEADER, false, false)
+        waitForElementWithTextToBeClickable(BUTTON_SCREEN_HEADER, false, false)
     }
 
     @When("I click on a component with a valid style attribute configured$")
     fun clickOnButtonWithStyle() {
         //ScreenRobot().clickOnText(BUTTON_WITH_STYLE_TEXT).sleep(2)
-        clickOnElementWithText(BUTTON_WITH_STYLE_TEXT, true, false)
+        waitForElementWithTextToBeClickable(BUTTON_WITH_STYLE_TEXT, false, false).click()
     }
 
     @Then("all my button components should render their respective text attributes correctly$")
@@ -52,9 +57,9 @@ class ButtonScreenSteps : AbstractStep() {
             .checkViewContainsText(BUTTON_WITH_STYLE_TEXT)
             .checkViewContainsText(BUTTON_WITH_APPEARANCE_TEXT)
             .sleep(2)*/
-        Assert.assertTrue(screenContainsElementWithText(BUTTON_DEFAULT_TEXT, false, false))
-        Assert.assertTrue(screenContainsElementWithText(BUTTON_WITH_STYLE_TEXT, true, false))
-        Assert.assertTrue(screenContainsElementWithText(BUTTON_WITH_APPEARANCE_TEXT, true, false))
+        waitForElementWithTextToBeClickable(BUTTON_DEFAULT_TEXT, false, false)
+        waitForElementWithTextToBeClickable(BUTTON_WITH_STYLE_TEXT, false, false)
+        waitForElementWithTextToBeClickable(BUTTON_WITH_APPEARANCE_TEXT, false, false)
     }
 
     @Then("component should render the action attribute correctly$")
@@ -63,8 +68,8 @@ class ButtonScreenSteps : AbstractStep() {
             .checkViewContainsText(ACTION_CLICK_HEADER)
             .checkViewContainsText(ACTION_CLICK_TEXT)
             .sleep(2)*/
-        Assert.assertTrue(screenContainsElementWithText(ACTION_CLICK_HEADER, true, false))
-        Assert.assertTrue(screenContainsElementWithText(ACTION_CLICK_TEXT, true, false))
+        waitForElementWithTextToBeClickable(ACTION_CLICK_HEADER, false, false)
+        waitForElementWithTextToBeClickable(ACTION_CLICK_TEXT, false, false)
     }
 
 

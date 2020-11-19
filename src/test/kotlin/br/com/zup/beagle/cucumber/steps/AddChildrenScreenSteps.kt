@@ -40,7 +40,7 @@ class AddChildrenScreenSteps : AbstractStep() {
     @Given("^that I'm on the addChildren Screen$")
     fun checkImageScreen() {
         //ScreenRobot().checkViewContainsText(ADD_CHILDREN_HEADER, true)
-        waitForElementToBeClickable(ADD_CHILDREN_HEADER, false, false)
+        waitForElementWithTextToBeClickable(ADD_CHILDREN_HEADER, false, false)
     }
 
     @Then("^A Text needs to be added after the already existing one$")
@@ -84,11 +84,11 @@ class AddChildrenScreenSteps : AbstractStep() {
 
     private fun waitForFixedText() {
         // ScreenRobot().checkViewContainsText(TEXT_FIXED, true)
-        waitForElementToBeClickable(TEXT_FIXED, false, false)
+        waitForElementWithTextToBeClickable(TEXT_FIXED, false, false)
     }
 
     private fun waitForAddedText() {
         // ScreenRobot().checkViewContainsText(TEXT_ADDED, true)
-        waitForElementToBeClickable(TEXT_ADDED, false, false)
+        waitForElementWithTextToBeClickable(TEXT_ADDED, false, false)
     }
 }
