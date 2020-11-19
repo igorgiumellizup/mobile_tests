@@ -27,7 +27,6 @@ class SimpleFormScreenSteps : AbstractStep() {
 
     @Before("@simpleform")
     fun setup() {
-        //TestUtils.startActivity(activityTestRule, ALERT_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

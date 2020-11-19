@@ -31,7 +31,6 @@ class PageViewScreenSteps : AbstractStep() {
 
     @Before("@pageview")
     fun setup() {
-        // TestUtils.startActivity(activityTestRule, CONDITIONAL_SCREEN_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

@@ -26,6 +26,7 @@ import java.net.URL
 
 object SuiteSetup {
 
+    val ERROR_SCREENSHOTS_FOLDER = "./build/screenshots"
     private var platform: String? = null
     private var driver: AppiumDriver<*>? = null
 
@@ -100,7 +101,7 @@ object SuiteSetup {
         try {
             driver?.resetApp();
         } catch (e: Exception) {
-            // e.printStackTrace();
+            println("ERROR resetting app: ${e.message}")
         }
     }
 
@@ -108,7 +109,7 @@ object SuiteSetup {
         try {
             driver?.closeApp();
         } catch (e: Exception) {
-            // e.printStackTrace();
+            println("ERROR closing app: ${e.message}")
         } finally {
             driver?.quit()
         }

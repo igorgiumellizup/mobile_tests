@@ -26,7 +26,6 @@ class SetContextScreenSteps: AbstractStep() {
 
     @Before("@setcontext")
     fun setup() {
-        //TestUtils.startActivity(activityTestRule, ALERT_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

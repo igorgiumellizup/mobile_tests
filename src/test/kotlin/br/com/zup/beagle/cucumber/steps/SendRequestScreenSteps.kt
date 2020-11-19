@@ -26,7 +26,6 @@ class SendRequestScreenSteps : AbstractStep() {
 
     @Before("@sendrequest")
     fun setup() {
-        //TestUtils.startActivity(activityTestRule, ALERT_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

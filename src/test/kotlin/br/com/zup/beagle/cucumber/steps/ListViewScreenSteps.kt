@@ -32,7 +32,6 @@ class ListViewScreenSteps : AbstractStep() {
 
     @Before("@listview")
     fun setup() {
-        // TestUtils.startActivity(activityTestRule, CONDITIONAL_SCREEN_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

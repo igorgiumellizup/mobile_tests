@@ -29,7 +29,6 @@ class ImageScreenSteps : AbstractStep() {
 
     @Before("@image")
     fun setup() {
-        // TestUtils.startActivity(activityTestRule, CONDITIONAL_SCREEN_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

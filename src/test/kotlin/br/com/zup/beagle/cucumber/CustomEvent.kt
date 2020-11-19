@@ -21,16 +21,38 @@ import io.cucumber.plugin.EventListener
 import io.cucumber.plugin.event.EventHandler
 import io.cucumber.plugin.event.EventPublisher
 import io.cucumber.plugin.event.TestRunFinished
+import io.cucumber.plugin.event.TestRunStarted
+import org.apache.commons.io.FileUtils
+import java.io.File
+
 
 /**
- * Custom AfterAll\AfterClass hook to quit the driver. Runs once at the end of the test run
+ * Custom suite test run hooks
  */
 class CustomEvent : EventListener {
     override fun setEventPublisher(publisher: EventPublisher) {
+
+        // Similar to AfterAll
         publisher.registerHandlerFor(
             TestRunFinished::class.java,
-            EventHandler<TestRunFinished> { event: TestRunFinished? ->
+            EventHandler<TestRunFinished> {
                 SuiteSetup.closeDriver()
+            })
+
+        // Similar to BeforeAll
+        publisher.registerHandlerFor(
+            TestRunStarted::class.java,
+            EventHandler<TestRunStarted> { event: TestRunStarted? ->
+                // move driver initialization here?
+
+                try {
+                    val screenShotsFolder: File = File("${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}")
+                    if (screenShotsFolder.exists())
+                        FileUtils.cleanDirectory(screenShotsFolder!!)
+                } catch (exception: Exception) {
+                    print("ERROR cleaning screenshots folder: ${exception.message}")
+                }
+
             })
     }
 }

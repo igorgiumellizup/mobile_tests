@@ -51,7 +51,6 @@ class ScrollViewScreenSteps : AbstractStep() {
 
     @Before("@scrollview")
     fun setup() {
-        // TestUtils.startActivity(activityTestRule, CONDITIONAL_SCREEN_BFF_URL)
         loadBffScreenFromMainScreen()
     }
 

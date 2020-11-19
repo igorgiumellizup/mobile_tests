@@ -44,7 +44,7 @@ class HookManager {
         if (scenario.isFailed){
             try{
                 val scrFile: File = (SuiteSetup.getDriver() as TakesScreenshot).getScreenshotAs(OutputType.FILE)
-                val destFile: File = File("./build/screenshots/ERROR-${scenario.name}.png")
+                val destFile: File = File("${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}/ERROR-${scenario.name}-${System.currentTimeMillis()}.png")
 
                 if (destFile.exists())
                     destFile.delete()

@@ -21,7 +21,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
-class ConfirmSteps : AbstractStep() {
+class ConfirmScreenSteps : AbstractStep() {
     override var bffRelativeUrlPath = "/confirm"
 
     @Before("@confirm")
