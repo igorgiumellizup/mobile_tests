@@ -46,7 +46,7 @@ class GenericSteps : AbstractStep() {
     @When("^I click on text (.*)$")
     fun clickOnText(string1: String) {
         //ScreenRobot().clickOnText(string1)
-        waitForElementWithTextToBeClickable(string1, false, true)
+        waitForElementWithTextToBeClickable(string1, false, true).click()
     }
 
     @When("^I click on input with hint (.*)$")
