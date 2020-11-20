@@ -28,7 +28,7 @@ import org.junit.runner.RunWith
 @CucumberOptions(
     tags = "@tabview and not @inProgress",
     features = ["src/test/resources/features"],
-    plugin = ["br.com.zup.beagle.cucumber.CustomEvent"]
+    plugin = ["br.com.zup.beagle.setup.SuiteSetupPlugin"]
 )
 class Runner {
 }

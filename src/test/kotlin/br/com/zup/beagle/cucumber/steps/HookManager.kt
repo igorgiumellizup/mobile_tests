@@ -25,22 +25,26 @@ import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
 import java.io.File
 
-
+/**
+ * Must be in the same package of cucumber steps
+ */
 class HookManager {
 
     /**
-     * Before each 'Given'statement
+     * Before each 'When' test
      */
     /*
     @Before
     fun setupBeforeFeature() {
-        SuiteSetup.init()
+        //...
     }
     */
+
 
     @After
     fun tearDownAfterFeature(scenario: Scenario) {
 
+        // takes a screenshot of the screen on error
         if (scenario.isFailed){
             try{
                 val scrFile: File = (SuiteSetup.getDriver() as TakesScreenshot).getScreenshotAs(OutputType.FILE)

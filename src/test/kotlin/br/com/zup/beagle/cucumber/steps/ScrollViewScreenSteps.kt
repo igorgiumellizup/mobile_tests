@@ -93,7 +93,7 @@ class ScrollViewScreenSteps : AbstractStep() {
 
          */
         waitForElementWithTextToBeClickable(PARAGRAPH, false, false)
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 
     @When("^I press on text to be scrolled and rotated (.*)$")
@@ -117,7 +117,7 @@ class ScrollViewScreenSteps : AbstractStep() {
     @And("^the scrollview rotate should perform horizontally (.*)$")
     fun checkScrollViewHorizontallyRotation(string: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string)
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 
     @And("^even if the screen is rotated the scrollview must be perform horizontally (.*)$")
@@ -129,7 +129,7 @@ class ScrollViewScreenSteps : AbstractStep() {
 
          */
         rotateToLandscapePosition()
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 
     @When("^I have a vertical scroll configured$")
@@ -164,7 +164,7 @@ class ScrollViewScreenSteps : AbstractStep() {
     @And("^the scrollview should perform vertically (.*)$")
     fun checkScrollViewVertical(string: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string)
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 
     @When("^I press on text scrollview to be rotate (.*)$")
@@ -187,7 +187,7 @@ class ScrollViewScreenSteps : AbstractStep() {
     @And("^the scrollview rotate should perform vertically (.*)$")
     fun checkScrollViewVerticallyRotation(string: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string)
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 
     @And("^even if the screen is rotated the scrollview must be perform vertically (.*)$")
@@ -199,7 +199,7 @@ class ScrollViewScreenSteps : AbstractStep() {
 
          */
         rotateToLandscapePosition()
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 
 }

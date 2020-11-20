@@ -141,8 +141,12 @@ object AppiumUtil {
 
     }
 
+    /**
+     * Waits for an element to be found on the screen element tree. This does not
+     * necessarily mean that the element is visible.
+     */
     @Synchronized
-    fun waitForPresenceOfElement(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): MobileElement {
+    fun waitForElementToBePresent(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): MobileElement {
         val wait: FluentWait<MobileDriver<*>> = FluentWait<MobileDriver<*>>(driver)
         wait.pollingEvery(Duration.ofMillis(500))
         wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
@@ -151,22 +155,9 @@ object AppiumUtil {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator)) as MobileElement
     }
 
-    @Synchronized
-    fun waitForElementToBeClickable(
-        driver: MobileDriver<*>,
-        parent: MobileElement,
-        childLocator: By,
-        timeoutInMilliseconds: Long
-    ): MobileElement {
-        val wait = FluentWait(driver)
-        wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
-        wait.ignoring(NoSuchElementException::class.java)
-        wait.ignoring(StaleElementReferenceException::class.java)
-        wait.ignoring(ElementNotInteractableException::class.java)
-        wait.ignoring(ElementNotVisibleException::class.java)
-        return wait.until { parent.findElement(childLocator) } as MobileElement
-    }
-
+    /**
+     * Waits for an element to be visible and enabled (clickable)
+     */
     @Synchronized
     fun waitForElementToBeClickable(
         driver: MobileDriver<*>,
@@ -184,6 +175,9 @@ object AppiumUtil {
         return wait.until(ExpectedConditions.elementToBeClickable(locator)) as MobileElement // clickable = verifies enabled e visibility
     }
 
+    /**
+     * Waits for an element to be visible and enabled (clickable)
+     */
     @Synchronized
     fun waitForElementToBeClickable(
         driver: MobileDriver<*>,
@@ -199,6 +193,9 @@ object AppiumUtil {
         return wait.until(ExpectedConditions.elementToBeClickable(element)) as MobileElement
     }
 
+    /**
+     * Waits for a set of elements to be visible and enabled (clickable)
+     */
     @Synchronized
     fun waitForElementsToBeClickable(
         driver: MobileDriver<*>,
@@ -210,21 +207,36 @@ object AppiumUtil {
         }
     }
 
+    /**
+     * Waits for an element to be hidden or nonexistent
+     */
     @Synchronized
-    fun waitForElementsToBeClickable(
-        driver: MobileDriver<*>,
-        locators: Array<By>,
-        timeoutInMilliseconds: Long
-    ) {
-        for (locator in locators) {
-            waitForElementToBeClickable(driver, locator, timeoutInMilliseconds, 400)
+    fun waitForElementToBeInvisible(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): Boolean {
+        val wait = FluentWait(driver)
+        wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
+        wait.pollingEvery(Duration.ofMillis(500))
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator))
+    }
+
+    /**
+     * Waits for an element to be visible and disabled (not clickable)
+     */
+    @Synchronized
+    fun waitForElementToBeDisabled(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): Boolean {
+        val mobileElement = waitForElementToBePresent(driver, locator, timeoutInMilliseconds)
+        val wait = FluentWait(driver)
+        wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
+        wait.pollingEvery(Duration.ofMillis(500))
+        return wait.until {
+            mobileElement.isDisplayed && !mobileElement.isEnabled
         }
     }
 
-
     @Synchronized
     fun waitForElementTextToBe(
-        driver: MobileDriver<*>, element: MobileElement, text: String,
+        driver: MobileDriver<*>,
+        element: MobileElement,
+        text: String,
         timeoutInMilliseconds: Long
     ): Boolean {
         val wait = FluentWait(driver)
@@ -236,7 +248,10 @@ object AppiumUtil {
 
     @Synchronized
     fun waitForElementAttributeToBe(
-        driver: MobileDriver<*>, element: MobileElement, attribute: String, value: String,
+        driver: MobileDriver<*>,
+        element: MobileElement,
+        attribute: String,
+        value: String,
         timeoutInMilliseconds: Long
     ): Boolean {
         val wait = FluentWait(driver)
@@ -244,30 +259,6 @@ object AppiumUtil {
         return wait.until {
             element.getAttribute(attribute) != null && element.getAttribute(attribute) == value
         }
-    }
-
-
-    @Synchronized
-    fun waitForInvisibilityOf(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): Boolean {
-        val wait = FluentWait(driver)
-        wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
-        wait.pollingEvery(Duration.ofMillis(500))
-        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator))
-    }
-
-    @Synchronized
-    fun waitForInvisibilityOf(
-        driver: MobileDriver<*>,
-        element: MobileElement,
-        timeoutInMilliseconds: Long
-    ): Boolean {
-        val list = mutableListOf<MobileElement>()
-        list.add(element)
-        val wait = FluentWait(driver)
-        wait.withTimeout(Duration.ofMillis(timeoutInMilliseconds))
-        wait.pollingEvery(Duration.ofMillis(500))
-        return wait.until(ExpectedConditions.invisibilityOfAllElements(list as List<WebElement>))
-
     }
 
     /**
@@ -290,7 +281,7 @@ object AppiumUtil {
     @Synchronized
     fun elementExists(driver: MobileDriver<*>, locator: By, timeoutInMilliseconds: Long): Boolean {
         try {
-            waitForPresenceOfElement(driver, locator, timeoutInMilliseconds)
+            waitForElementToBePresent(driver, locator, timeoutInMilliseconds)
             return true // element found
         } catch (e: Exception) {
         }

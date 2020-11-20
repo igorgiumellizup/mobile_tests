@@ -36,23 +36,9 @@ object SuiteSetup {
 
     fun getDriver(): AppiumDriver<*> {
 
-        if (driver != null)
-            return driver!!
+        if (driver == null)
+            throw Exception("Test suite not initialized correctly!")
 
-        if (platform == null) {
-            platform = System.getProperty("platform") // command-line argument
-        }
-
-        println("#### Initializing suite setup with platform $platform...")
-
-        if (bffBaseUrl == null) {
-            if (isAndroid())
-                bffBaseUrl = "http://10.0.2.2:8080"
-            else
-                bffBaseUrl = "http://localhost:8080"
-        }
-
-        initDriver()
         return driver!!
     }
 
@@ -68,9 +54,22 @@ object SuiteSetup {
         return bffBaseUrl!!
     }
 
-    private fun initDriver() {
+    fun initSuit() {
 
         //startAppiumServer()
+
+        if (platform == null) {
+            platform = System.getProperty("platform") // command-line argument
+        }
+
+        println("#### Initializing suite setup with platform $platform...")
+
+        if (bffBaseUrl == null) {
+            if (isAndroid())
+                bffBaseUrl = "http://10.0.2.2:8080"
+            else
+                bffBaseUrl = "http://localhost:8080"
+        }
 
         val capabilities = DesiredCapabilities()
 

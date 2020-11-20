@@ -63,7 +63,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         //onView((withText(TEXT_ADDED))).check(matches(isDisplayed()))
         //onView(withId(CONTAINER_ID.toAndroidId())).check(matches(not(withText(TEXT_FIXED))))
         waitForAddedText()
-        waitForInvisibilityOfElementWithText(TEXT_FIXED, false, false)
+        waitForElementWithTextToBeInvisible(TEXT_FIXED, false, false)
     }
 
     @Then("^Nothing should happen$")
@@ -72,7 +72,7 @@ class AddChildrenScreenSteps : AbstractStep() {
         //onView((withText(TEXT_FIXED))).check(matches(isDisplayed()))
         //onView(withId(CONTAINER_ID.toAndroidId())).check(matches(not(withText(TEXT_ADDED))))
         waitForFixedText()
-        waitForInvisibilityOfElementWithText(TEXT_ADDED, false, false)
+        waitForElementWithTextToBeInvisible(TEXT_ADDED, false, false)
     }
 
     private fun waitForFixedAndAddedTexts() {

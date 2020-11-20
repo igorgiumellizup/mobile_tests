@@ -21,7 +21,6 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import org.junit.Assert
 
 
 class NavigateScreenSteps : AbstractStep() {
@@ -66,14 +65,14 @@ class NavigateScreenSteps : AbstractStep() {
     @Then("^the screen should not navigate to another screen with the text label (.*)$")
     fun checkGlobalTextScreenIsNotOnView(string2: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string2)
-        waitForInvisibilityOfElementWithText(string2, false, false)
+        waitForElementWithTextToBeInvisible(string2, false, false)
     }
 
     @Then("^the app should dismiss the view that contains (.*)$")
     fun checkTextIsNotOnAnyView(string1: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string1)
         //Assert.assertFalse(screenContainsElementWithText(string1, false))
-        waitForInvisibilityOfElementWithText(string1,false, false)
+        waitForElementWithTextToBeInvisible(string1,false, false)
     }
 
     @Then("^the view that contains the (.*) must still exist$")

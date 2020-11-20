@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package br.com.zup.beagle.cucumber
+package br.com.zup.beagle.setup
 
-import br.com.zup.beagle.setup.SuiteSetup
 import io.cucumber.plugin.EventListener
 import io.cucumber.plugin.event.EventHandler
 import io.cucumber.plugin.event.EventPublisher
@@ -29,7 +28,7 @@ import java.io.File
 /**
  * Custom suite test run hooks
  */
-class CustomEvent : EventListener {
+class SuiteSetupPlugin : EventListener {
     override fun setEventPublisher(publisher: EventPublisher) {
 
         // Similar to AfterAll
@@ -43,7 +42,8 @@ class CustomEvent : EventListener {
         publisher.registerHandlerFor(
             TestRunStarted::class.java,
             EventHandler<TestRunStarted> { event: TestRunStarted? ->
-                // move driver initialization here?
+
+                SuiteSetup.initSuit()
 
                 try {
                     val screenShotsFolder: File = File("${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}")

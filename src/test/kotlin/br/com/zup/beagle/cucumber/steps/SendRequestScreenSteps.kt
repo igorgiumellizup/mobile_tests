@@ -56,6 +56,6 @@ class SendRequestScreenSteps : AbstractStep() {
     @Then("^the pressed button changes it's (.*) title to didFinish$")
     fun verifyChangeTitle(string: String) {
         // ScreenRobot().checkViewDoesNotContainsText(string).sleep(2)
-        waitForInvisibilityOfElementWithText(string, false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 }

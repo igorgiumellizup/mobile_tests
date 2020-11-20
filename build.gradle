@@ -53,7 +53,7 @@ task cucumber() {
             args = [/*'--plugin','pretty', */
                     '--glue', 'br.com.zup.beagle.cucumber.steps', 'src/test/resources/features',
                     '--tags', '@' + System.getProperty("platform") + " and not @inProgress",
-                    '--plugin', 'br.com.zup.beagle.cucumber.CustomEvent']
+                    '--plugin', 'br.com.zup.beagle.setup.SuiteSetupPlugin']
 
             println 'Cucumber args: ' + args
         }
