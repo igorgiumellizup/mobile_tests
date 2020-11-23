@@ -23,6 +23,9 @@ import br.com.zup.beagle.utils.AppiumUtil
 import br.com.zup.beagle.utils.SwipeDirection
 import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileElement
+import io.appium.java_client.android.AndroidTouchAction
+import io.appium.java_client.ios.IOSTouchAction
+import io.appium.java_client.touch.offset.PointOption
 import org.openqa.selenium.By
 import org.openqa.selenium.ScreenOrientation
 
@@ -97,20 +100,16 @@ abstract class AbstractStep {
 
     }
 
+    @Deprecated(
+        message = "Seaches the element and scroll to it, but some platforms won't render the element when it is not visible. " +
+                "Use swipe instead"
+    )
     protected fun scrollDownToElementWithText(
         elementText: String,
         likeSearch: Boolean,
         ignoreCase: Boolean
     ): MobileElement {
         return scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.DOWN)
-    }
-
-    protected fun scrollLeftToElementWithText(
-        elementText: String,
-        likeSearch: Boolean,
-        ignoreCase: Boolean
-    ): MobileElement {
-        return scrollToElement(elementText, likeSearch, ignoreCase, SwipeDirection.LEFT)
     }
 
     private fun scrollToElement(
@@ -192,6 +191,32 @@ abstract class AbstractStep {
 
     private fun getSearchByHintXpath(elementHint: String, likeSearch: Boolean, ignoreCase: Boolean): By {
         return AppiumUtil.getPropertyXpath("hint", elementHint, likeSearch, ignoreCase)
+    }
+
+
+    protected fun isTextFieldNumeric(elementText: String): Boolean {
+        val textElement = waitForElementWithTextToBeClickable(elementText, false, false)
+        textElement.click()
+        sleep(1000) // TouchActions estão ocorrendo antes do elemento estar pronto para escrita
+        if (SuiteSetup.isAndroid()) {
+            var androidActions = AndroidTouchAction(getDriver())
+            androidActions.press(PointOption.point(500, 1700)).release().perform() // digit 5
+        } else {
+            var iosActions = IOSTouchAction(getDriver())
+            iosActions.press(PointOption.point(500, 1700)).release().perform() // TODO: find a number place to click!
+        }
+
+        var typedChar =
+            if (textElement.text.length > 1) textElement.text.substring(textElement.text.length - 1)
+            else textElement.text
+
+        try {
+            typedChar.toInt()
+        } catch (nfe: NumberFormatException) {
+            return false
+        }
+
+        return true
     }
 
     // for experimentation purposes

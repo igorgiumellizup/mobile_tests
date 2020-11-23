@@ -18,7 +18,9 @@
 
 package temp
 
-
+/**
+ * Kotlin temp tests. Doesn't belong to the application
+ */
 fun main(args: Array<String>) {
     println("Hello World!")
     Object.setProperties();

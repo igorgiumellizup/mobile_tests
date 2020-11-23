@@ -21,6 +21,7 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.junit.Assert
 
 class TextInputScreenSteps : AbstractStep() {
     override var bffRelativeUrlPath = "/textinput"
@@ -51,7 +52,7 @@ class TextInputScreenSteps : AbstractStep() {
     @When("^the disabled textInput (.*) is visible$")
     fun checkIfTextInputIsDisabled(string: String) {
         // ScreenRobot().checkViewContainsHint(string)
-        waitForElementWithTextToBeClickable(string, false, false)
+        waitForElementWithTextToBeDisabled(string, false, false)
     }
 
     @Then("^verify if its (.*) is disabled$")
@@ -65,7 +66,7 @@ class TextInputScreenSteps : AbstractStep() {
     @When("^the value (.*) of the readOnly field is on the screen$")
     fun checkIfTextInputIsReadOnly(string: String) {
         // ScreenRobot().checkViewContainsText(string)
-        waitForElementWithTextToBeClickable(string, false, false)
+        waitForElementWithTextToBeDisabled(string, false, false)
     }
 
     @Then("^verify if the field with the value (.*) is read only$")
@@ -90,7 +91,12 @@ class TextInputScreenSteps : AbstractStep() {
         ScreenRobot()
             .hintInSecondPlan(string)
             */
-        // PAREI AQUI
+        val mobileElement = waitForElementWithTextToBeClickable(string, false, false)
+        Assert.assertTrue(string.equals(mobileElement.text))
+        mobileElement.sendKeys("a")
+        Assert.assertFalse(string.equals(mobileElement.text))
+        mobileElement.clear()
+        Assert.assertTrue(string.equals(mobileElement.text))
     }
 
     @Then("^validate that a textInput (.*) of type number is set$")
@@ -98,53 +104,35 @@ class TextInputScreenSteps : AbstractStep() {
         /*ScreenRobot()
             .checkInputTypeNumber(string)
             */
+        Assert.assertTrue(isTextFieldNumeric(string))
     }
 
     @And("^I click the textInput with the placeholder (.*)$")
-    fun textInoutWithActionOfOnFocusAndOnFocus(string: String) {
+    fun textInputWithActionOfOnFocusAndOnFocus(string: String) {
         /*ScreenRobot()
             .scrollToWithHint(string)
             .clickOnInputWithHint(string)*/
+        swipeUp()
+        waitForElementWithTextToBeClickable(string, false, false).click()
     }
 
     @Then("^the textInput with the placeholder \"Ordered actions\" should have value (.*)$")
     fun checkOrderedActions(string: String) {
         // ScreenRobot().checkViewContainsText(string)
+        waitForElementWithTextToBeDisabled(string, false, false)
     }
 
     @Then("^the textInput with the placeholder \"Unordered actions\" will change its value to (.*)$")
-    fun textInoutWithActionOfOnBlur(string: String) {
+    fun textInputWithActionOfOnBlur(string: String) {
         // ScreenRobot().checkViewContainsText(string)
+        waitForElementWithTextToBeDisabled(string, false, false)
+
     }
 
     @And("^I type anything on textInput with the placeholder (.*)$")
     fun triggersOnChangeMethodAndCheckChanges(string: String) {
         // ScreenRobot().typeText(string, "a")
-    }
-
-    @When("^I click to textInput (.*) then change to (.*) and to (.*)$")
-    fun textInoutWithActionOfOnFocusAndOnChange(string: String, string2: String, string3: String) {
-        /*ScreenRobot()
-            .scrollToWithHint(string)
-            .checkViewContainsHint(string)
-            .clickOnInputWithHint(string)
-            .checkViewContainsText(string2)
-            .typeText(string, "a")
-            .checkViewContainsText(string3)
-         */
-    }
-
-    @Then("^the text (.*) should be appear in the correctly order$")
-    fun textInoutWithActionOfOnBlurCorrectlyOrder(string: String) {
-        /*
-        ScreenRobot()
-            .checkViewContainsHint("is textInput type number")
-            .clickOnInputWithHint("is textInput type number")
-            .checkViewContainsText(string)
-            .checkViewDoesNotContainsText("DidOnFocus")
-            .checkViewDoesNotContainsText("DidOnFocusDidOnChange")
-
-         */
+        waitForElementWithTextToBeClickable(string, false, false).sendKeys("a")
     }
 
     @Then("^The hidden input fields (.*) should not be visible$")
@@ -153,5 +141,8 @@ class TextInputScreenSteps : AbstractStep() {
             .scrollTo("There are two hidden input fields above")
             .checkViewIsNotDisplayed(string)
             */
+        swipeUp()
+        waitForElementWithTextToBeClickable("There are two hidden input fields above", false, false)
+        waitForElementWithTextToBeInvisible(string, false, false)
     }
 }

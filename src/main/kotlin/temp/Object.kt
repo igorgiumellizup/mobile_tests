@@ -16,6 +16,9 @@
 
 package temp
 
+/**
+ * Kotlin temp tests. Doesn't belong to the application
+ */
 object Object{
     var property1: String? = null
     fun setProperties(){
