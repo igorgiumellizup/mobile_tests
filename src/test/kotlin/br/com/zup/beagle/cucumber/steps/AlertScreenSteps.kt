@@ -68,6 +68,6 @@ class AlertScreenSteps : AbstractStep() {
     @Then("^an alert with a confirmation button with (.*) label should appear$")
     fun checkAlertConfirmationButtonLabelIsSetWithText(string: String) {
         //ScreenRobot().checkViewContainsText(string)
-        waitForElementWithTextToBeClickable(string, false, false)
+        waitForElementWithTextToBeClickable(string, false, true)
     }
 }
