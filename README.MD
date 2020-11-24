@@ -15,7 +15,7 @@ This project uses [Appium](http://appium.io/) and [Cucumber](https://cucumber.io
 
 ### Android
 
-A different version of the automated-tests app was implemented for this project. The new app has 
+This project uses a different version of the automated-tests app. The new app has 
 a main screen activity that takes a BFF URL and loads the requestd bff end-point. This was necessary because 
 Appium can't manipulate or create an app source code in orther to create a custom app. Appium only 
 works with already compiled apps.
@@ -30,7 +30,11 @@ The emulator must be running before running the tests
  
 ### iOS (in progress...)
 
-Not tested yet
+Just like the Android section description and for the same reasons, this project also uses a custom test app for iOS. 
+The custom app can be found in the same branch described in the Android section. 
+TODO:
+ - Explain how to run the iOS emulator with the app already installed
+ - Explain how to obtain the iOS app URL that is set up in SuiteSetup.kt
   
 ## Running
 
@@ -48,4 +52,14 @@ Now, just run \ debug the plan
 
 ## Screenshots on error
 
-Whenever a feature or step fails, a screenshot is generated at build/screenshots 
+Whenever a feature or step fails, a screenshot is generated at build/screenshots
+
+## Limitations
+
+Currently, Appium is not able to:
+
+- get an element's color and font properties (except for Webviews)
+- get an element's alignment (LEFT, CENTER etc)
+- tell if the keyboard is numeric
+
+ 

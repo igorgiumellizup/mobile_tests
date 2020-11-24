@@ -219,6 +219,14 @@ abstract class AbstractStep {
         return true
     }
 
+    /**
+     * returns the first clickable image element found
+     */
+    protected fun waitForClickableImageElement(): MobileElement {
+        val xpath = By.xpath("//*[contains(@class,'ImageView')]")
+        return AppiumUtil.waitForElementToBeClickable(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL, 200)
+    }
+
     // for experimentation purposes
     protected fun printElementLocationAndSize(string1: String, string2: String) {
         val element1: MobileElement = AppiumUtil.waitForElementToBeClickable(
