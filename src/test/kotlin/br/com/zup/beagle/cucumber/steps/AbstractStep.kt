@@ -197,7 +197,6 @@ abstract class AbstractStep {
     }
 
     private fun getSearchByTextXpath(elementText: String, likeSearch: Boolean, ignoreCase: Boolean): By {
-        val xpath: By
         val property = if (SuiteSetup.isAndroid())
             "text"
         else
@@ -207,7 +206,11 @@ abstract class AbstractStep {
     }
 
     private fun getSearchByValueXpath(elementHint: String, likeSearch: Boolean, ignoreCase: Boolean): By {
-        return AppiumUtil.getPropertyXpath("value", elementHint, likeSearch, ignoreCase)
+        val property = if (SuiteSetup.isAndroid())
+            "text"
+        else
+            "value"
+        return AppiumUtil.getPropertyXpath(property, elementHint, likeSearch, ignoreCase)
     }
 
 

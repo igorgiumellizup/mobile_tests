@@ -34,31 +34,31 @@ class TextInputScreenSteps : AbstractStep() {
     @Given("^the Beagle application did launch with the textInput on screen$")
     fun checkBaseScreen() {
         // ScreenRobot().checkViewContainsText("Beagle Text Input", true)
-        waitForElementWithTextToBeClickable("Beagle Text Input", false, false)
+        waitForElementWithValueToBeClickable("Beagle Text Input", false, false)
     }
 
     @Then("^I must check if the textInput value (.*) appears on the screen$")
     fun checkTextInput(string: String) {
         // ScreenRobot().checkViewContainsText(string, true)
-        waitForElementWithTextToBeClickable(string, false, false)
+        waitForElementWithValueToBeClickable(string, false, false)
     }
 
     @Then("^I must check if the textInput placeholder (.*) appears on the screen$")
     fun checkTextInputPlaceholder(string: String) {
         // ScreenRobot().checkViewContainsHint(string, true)
-        waitForElementWithTextToBeClickable(string, false, false)
+        waitForElementWithValueToBeClickable(string, false, false)
     }
 
     @When("^the disabled textInput (.*) is visible$")
     fun checkIfTextInputIsDisabled(string: String) {
         // ScreenRobot().checkViewContainsHint(string)
-        waitForElementWithTextToBeDisabled(string, false, false)
+        waitForElementWithValueToBeDisabled(string, false, false)
     }
 
     @Then("^verify if its (.*) is disabled$")
     fun checkDisabledField(string: String) {
         // ScreenRobot().disabledFieldHint(string)
-        waitForElementWithTextToBeDisabled(string, false, false)
+        waitForElementWithValueToBeDisabled(string, false, false)
 
 
     }
@@ -66,13 +66,13 @@ class TextInputScreenSteps : AbstractStep() {
     @When("^the value (.*) of the readOnly field is on the screen$")
     fun checkIfTextInputIsReadOnly(string: String) {
         // ScreenRobot().checkViewContainsText(string)
-        waitForElementWithTextToBeDisabled(string, false, false)
+        waitForElementWithValueToBeDisabled(string, false, false)
     }
 
     @Then("^verify if the field with the value (.*) is read only$")
     fun checkReadOnlyField(string: String) {
         // ScreenRobot().disabledFieldText(string)
-        waitForElementWithTextToBeDisabled(string, false, false)
+        waitForElementWithValueToBeDisabled(string, false, false)
     }
 
     @When("^I click in the textInput with the placeholder (.*)$")
@@ -82,7 +82,7 @@ class TextInputScreenSteps : AbstractStep() {
             .checkViewContainsHint(string)
             .clickOnInputWithHint(string)
             */
-        waitForElementWithTextToBeClickable(string, false, false).click()
+        waitForElementWithValueToBeClickable(string, false, false).click()
     }
 
     @Then("^verify if the text (.*) is in the second plan$")
@@ -91,7 +91,7 @@ class TextInputScreenSteps : AbstractStep() {
         ScreenRobot()
             .hintInSecondPlan(string)
             */
-        val mobileElement = waitForElementWithTextToBeClickable(string, false, false)
+        val mobileElement = waitForElementWithValueToBeClickable(string, false, false)
         Assert.assertTrue(string.equals(mobileElement.text))
         mobileElement.sendKeys("a")
         Assert.assertFalse(string.equals(mobileElement.text))
@@ -113,26 +113,26 @@ class TextInputScreenSteps : AbstractStep() {
             .scrollToWithHint(string)
             .clickOnInputWithHint(string)*/
         swipeUp()
-        waitForElementWithTextToBeClickable(string, false, false).click()
+        waitForElementWithValueToBeClickable(string, false, false).click()
     }
 
     @Then("^the textInput with the placeholder \"Ordered actions\" should have value (.*)$")
     fun checkOrderedActions(string: String) {
         // ScreenRobot().checkViewContainsText(string)
-        waitForElementWithTextToBeDisabled(string, false, false)
+        waitForElementWithValueToBeDisabled(string, false, false)
     }
 
     @Then("^the textInput with the placeholder \"Unordered actions\" will change its value to (.*)$")
     fun textInputWithActionOfOnBlur(string: String) {
         // ScreenRobot().checkViewContainsText(string)
-        waitForElementWithTextToBeDisabled(string, false, false)
+        waitForElementWithValueToBeDisabled(string, false, false)
 
     }
 
     @And("^I type anything on textInput with the placeholder (.*)$")
     fun triggersOnChangeMethodAndCheckChanges(string: String) {
         // ScreenRobot().typeText(string, "a")
-        waitForElementWithTextToBeClickable(string, false, false).sendKeys("a")
+        waitForElementWithValueToBeClickable(string, false, false).sendKeys("a")
     }
 
     @Then("^The hidden input fields (.*) should not be visible$")
@@ -142,7 +142,7 @@ class TextInputScreenSteps : AbstractStep() {
             .checkViewIsNotDisplayed(string)
             */
         swipeUp()
-        waitForElementWithTextToBeClickable("There are two hidden input fields above", false, false)
-        waitForElementWithTextToBeInvisible(string, false, false)
+        waitForElementWithValueToBeClickable("There are two hidden input fields above", false, false)
+        waitForElementWithValueToBeInvisible(string, false, false)
     }
 }
