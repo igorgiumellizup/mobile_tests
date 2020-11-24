@@ -68,10 +68,36 @@ abstract class AbstractStep {
     }
 
     /**
+     * Waits for an element to be visible and enabled (clickable)
+     */
+    protected fun waitForElementWithValueToBeClickable(
+        elementValue: String,
+        likeSearch: Boolean,
+        ignoreCase: Boolean
+    ): MobileElement {
+        val xpath: By = getSearchByValueXpath(elementValue, likeSearch, ignoreCase)
+        return AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            xpath,
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
+            0
+        )
+
+    }
+
+    /**
      * Waits for an element to be visible and disabled (not clickable)
      */
     protected fun waitForElementWithTextToBeDisabled(elementText: String, likeSearch: Boolean, ignoreCase: Boolean) {
         val xpath: By = getSearchByTextXpath(elementText, likeSearch, ignoreCase)
+        AppiumUtil.waitForElementToBeDisabled(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
+    }
+
+    /**
+     * Waits for an element to be visible and disabled (not clickable)
+     */
+    protected fun waitForElementWithValueToBeDisabled(elementValue: String, likeSearch: Boolean, ignoreCase: Boolean) {
+        val xpath: By = getSearchByValueXpath(elementValue, likeSearch, ignoreCase)
         AppiumUtil.waitForElementToBeDisabled(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
@@ -83,21 +109,12 @@ abstract class AbstractStep {
         AppiumUtil.waitForElementToBeInvisible(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
-    // no android não funciona, tudo por lá é 'text'. Verificar no iOS
-    @Deprecated(message = "hint property is not accessible anymore. Use waitForElementWithTextToBeClickable instead")
-    protected fun waitForElementWithHintToBeClickable(
-        elementHint: String,
-        likeSearch: Boolean,
-        ignoreCase: Boolean
-    ): MobileElement {
-        val xpath: By = getSearchByHintXpath(elementHint, likeSearch, ignoreCase)
-        return AppiumUtil.waitForElementToBeClickable(
-            getDriver(),
-            xpath,
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
-            0
-        )
-
+    /**
+     * Waits for an element to be hidden or nonexistent
+     */
+    protected fun waitForElementWithValueToBeInvisible(elementValue: String, likeSearch: Boolean, ignoreCase: Boolean) {
+        val xpath: By = getSearchByValueXpath(elementValue, likeSearch, ignoreCase)
+        AppiumUtil.waitForElementToBeInvisible(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL)
     }
 
     @Deprecated(
@@ -189,8 +206,8 @@ abstract class AbstractStep {
         return AppiumUtil.getPropertyXpath(property, elementText, likeSearch, ignoreCase)
     }
 
-    private fun getSearchByHintXpath(elementHint: String, likeSearch: Boolean, ignoreCase: Boolean): By {
-        return AppiumUtil.getPropertyXpath("hint", elementHint, likeSearch, ignoreCase)
+    private fun getSearchByValueXpath(elementHint: String, likeSearch: Boolean, ignoreCase: Boolean): By {
+        return AppiumUtil.getPropertyXpath("value", elementHint, likeSearch, ignoreCase)
     }
 
 
