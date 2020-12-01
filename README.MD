@@ -52,14 +52,44 @@ Now, just run \ debug the plan
 
 ## Screenshots on error
 
-Whenever a feature or step fails, a screenshot is generated at build/screenshots
+Whenever a feature or step fails, the test suite will take a screenshot of the emulator and place it 
+in ``build/screenshots`` folder
 
-## Limitations
+## Xpath element attributes
 
-Currently, Appium is not able to:
+There are [several](http://appium.io/docs/en/writing-running-appium/finding-elements/) ways to find an element 
+with Appium. It's always recommended to search by a unique identifier, for example the element's Id (ex ``driver.findElementById(...)``).
+However, and in most cases, there's no such unique identifier, and it is necessary to rely on other attributes to find 
+an element.   
+
+A consolidated method to find elements, regardless of the mobile platform, is Xpath. Xpath relies on expression notation
+to search for elements by its attributes (id, name, class, etc), children or by other elements next to it. When choosing 
+Xpath on mobile, notice that some element attributes have different names on each platform:
+
+| Element Attribute description                         | Android           | iOS                   |
+|-------------------------------------------------------|:-----------------:|----------------------:|
+| Value (value of textfields, textareas, etc)           | @text             | @value                |
+| Title (value of labels, tabs, buttons, etc)           | @text             | @name                 |
+| Class. Tells the type of element (image, button, etc) | @class            | @type                 |
+| Id, a native element identifier                       | @resource-id      | @name                 |
+| Accessibility id                                      | @content-desc     | @accessibility-id     |
+
+It's recommended to use [Appium Inspector Tool](https://github.com/appium/appium-desktop) on each platform to make sure 
+the desired attribute is showing and set with the expected value. Basically, all the attributes shown in this tool will 
+be accessible by Appium using Xpath.
+
+
+## Appium limitations
+
+Currently, Appium does not support the following operations:
 
 - get an element's color and font properties (except for Webviews)
 - get an element's alignment (LEFT, CENTER etc)
-- tell if the keyboard is numeric
+- tell if the keyboard is numeric (eg it will type letter keys even if the field is numeric only)
+- restart or reset an Android activity
 
- 
+Most of the above operations are natively supported in other test frameworks like [Espresso](https://developer.android.com/training/testing/espresso), 
+however Espresso and Appium have different approaches and application scope. Appium for instance will test the app in a 
+Black Box fashion, not having access to the app source code. Appium simulates a real user testing the app. 
+Espresso on the other hand is a White Box test framework because it runs and has access to the app source code. Espresso 
+only works with Android platform.
