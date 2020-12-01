@@ -33,19 +33,19 @@ class SimpleFormScreenSteps : AbstractStep() {
     @Given("^that I'm on the simple form screen$")
     fun checkBaseScreen() {
         // ScreenRobot().checkViewContainsText("SimpleForm", true)
-        waitForElementWithTextToBeClickable("SimpleForm", false, false)
+        waitForElementWithValueToBeClickable("SimpleForm", false, false)
     }
 
     @Then("^checks that the textInput with the place holder (.*) is on the screen$")
     fun checkTextInputEmailInSimpleForm(field: String) {
         // ScreenRobot().checkViewContainsHint(field, true)
-        waitForElementWithTextToBeClickable(field, false, false)
+        waitForElementWithValueToBeClickable(field, false, false)
     }
 
     @Then("^checks that the button with the title (.*) is on the screen$")
     fun checkButtonOnScreen(textButton: String) {
         // ScreenRobot().checkViewContainsText(textButton)
-        waitForElementWithTextToBeClickable(textButton, false, false)
+        waitForElementWithValueToBeClickable(textButton, false, false)
     }
 
     @When("^I click on textInput for email with (.*) and insert my (.*)$")
@@ -57,7 +57,7 @@ class SimpleFormScreenSteps : AbstractStep() {
             .typeText(hint, email)
             .hideKeyboard()
             */
-        var element: MobileElement = waitForElementWithTextToBeClickable(hint, false, false)
+        var element: MobileElement = waitForElementWithValueToBeClickable(hint, false, false)
         element.click()
         element.sendKeys(email)
         hideKeyboard()
@@ -71,7 +71,7 @@ class SimpleFormScreenSteps : AbstractStep() {
             .clickOnInputWithHint(hint)
             .typeText(hint, password)
             .hideKeyboard()*/
-        var element: MobileElement = waitForElementWithTextToBeClickable(hint, false, false)
+        var element: MobileElement = waitForElementWithValueToBeClickable(hint, false, false)
         element.click()
         element.sendKeys(password)
         hideKeyboard()
@@ -82,7 +82,7 @@ class SimpleFormScreenSteps : AbstractStep() {
         /*ScreenRobot()
             .checkViewContainsText(submit)
             .clickOnText(submit)*/
-        waitForElementWithTextToBeClickable(submit, false, false).click()
+        waitForElementWithValueToBeClickable(submit, false, false).click()
     }
 
     @Then("^verify if (.*) appears correctly$")
@@ -90,8 +90,8 @@ class SimpleFormScreenSteps : AbstractStep() {
         /*ScreenRobot()
             .checkViewContainsText("Registered data", true)
             .checkViewContainsText(alertData)*/
-        waitForElementWithTextToBeClickable(alertData, false, false)
-        waitForElementWithTextToBeClickable("Registered data", false, false)
+        waitForElementWithValueToBeClickable(alertData, false, false)
+        waitForElementWithValueToBeClickable("Registered data", false, false)
 
     }
 }
