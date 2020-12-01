@@ -225,7 +225,7 @@ abstract class AbstractStep {
 
 
     protected fun isTextFieldNumeric(elementText: String): Boolean {
-        val textElement = waitForElementWithTextToBeClickable(elementText, false, false)
+        val textElement = waitForElementWithValueToBeClickable(elementText, false, false)
         textElement.click()
         sleep(1000) // TouchActions estão ocorrendo antes do elemento estar pronto para escrita
         if (SuiteSetup.isAndroid()) {
@@ -233,7 +233,7 @@ abstract class AbstractStep {
             androidActions.press(PointOption.point(500, 1700)).release().perform() // digit 5
         } else {
             var iosActions = IOSTouchAction(getDriver())
-            iosActions.press(PointOption.point(127, 607)).release().perform() // TODO: find a number place to click!
+            iosActions.press(PointOption.point(160, 660)).release().perform()
         }
 
         var typedChar =
