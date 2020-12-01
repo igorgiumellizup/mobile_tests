@@ -223,7 +223,7 @@ abstract class AbstractStep {
             androidActions.press(PointOption.point(500, 1700)).release().perform() // digit 5
         } else {
             var iosActions = IOSTouchAction(getDriver())
-            iosActions.press(PointOption.point(500, 1700)).release().perform() // TODO: find a number place to click!
+            iosActions.press(PointOption.point(127, 607)).release().perform() // TODO: find a number place to click!
         }
 
         var typedChar =
@@ -243,7 +243,12 @@ abstract class AbstractStep {
      * returns the first clickable image element found
      */
     protected fun waitForClickableImageElement(): MobileElement {
-        val xpath = By.xpath("//*[contains(@class,'ImageView')]")
+        val xpath: By
+        if (SuiteSetup.isAndroid()) {
+            xpath = By.xpath("//*[contains(@class,'ImageView')]")
+        } else {
+            xpath = By.xpath("//*[contains(@type,'XCUIElementTypeImage')]")
+        }
         return AppiumUtil.waitForElementToBeClickable(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL, 200)
     }
 
