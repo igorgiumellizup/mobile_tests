@@ -64,16 +64,16 @@ class SimpleFormScreenSteps : AbstractStep() {
 
     }
 
-    @When("^I click on textInput for password with (.*) and insert my (.*)$")
-    fun insertPasswordInTextInput(hint: String, password: String) {
+    @When("^I click on textInput for name with (.*) and insert my (.*)$")
+    fun insertNameInTextInput(hint: String, name: String) {
         /*ScreenRobot()
             .checkViewContainsHint(hint)
             .clickOnInputWithHint(hint)
-            .typeText(hint, password)
+            .typeText(hint, name)
             .hideKeyboard()*/
         var element: MobileElement = waitForElementWithValueToBeClickable(hint, false, false)
         element.click()
-        element.sendKeys(password)
+        element.sendKeys(name)
         hideKeyboard()
     }
 
@@ -85,7 +85,7 @@ class SimpleFormScreenSteps : AbstractStep() {
         waitForElementWithValueToBeClickable(submit, false, false).click()
     }
 
-    @Then("^verify if (.*) appears correctly$")
+    @Then("^verify if (.*) appear correctly$")
     fun checkIfTextInputDataIsEqualAlert(alertData: String) {
         /*ScreenRobot()
             .checkViewContainsText("Registered data", true)
