@@ -74,8 +74,7 @@ class TouchScreenSteps : AbstractStep() {
     @When("^I click on touchable image$")
     fun clickOnTouchableImage() {
         // ScreenRobot().clickOnTouchableImage()
-        waitForClickableImageElement().click()
-
+        waitForImageElementToBeVisible(0).click()
 
     }
 

@@ -213,6 +213,16 @@ abstract class AbstractStep {
         return AppiumUtil.getPropertyXpath(property, elementHint, likeSearch, ignoreCase)
     }
 
+    private fun getSearchByImageXpath(): By {
+        val xpath: By
+        if (SuiteSetup.isAndroid()) {
+            xpath = By.xpath("//*[contains(@class,'ImageView')]")
+        } else {
+            xpath = By.xpath("//*[contains(@type,'XCUIElementTypeImage')]")
+        }
+        return xpath
+    }
+
 
     protected fun isTextFieldNumeric(elementText: String): Boolean {
         val textElement = waitForElementWithTextToBeClickable(elementText, false, false)
@@ -240,36 +250,23 @@ abstract class AbstractStep {
     }
 
     /**
-     * returns the first clickable image element found
+     * waits for the image at order @order to be clickable and return it
      */
-    protected fun waitForClickableImageElement(): MobileElement {
-        val xpath: By
-        if (SuiteSetup.isAndroid()) {
-            xpath = By.xpath("//*[contains(@class,'ImageView')]")
-        } else {
-            xpath = By.xpath("//*[contains(@type,'XCUIElementTypeImage')]")
-        }
-        return AppiumUtil.waitForElementToBeClickable(getDriver(), xpath, DEFAULT_ELEMENT_WAIT_TIME_IN_MILL, 200)
+    protected fun waitForImageElementToBeVisible(order: Int): MobileElement {
+        return AppiumUtil.waitForElementToBeClickable(
+            getDriver(),
+            waitForImageElements().get(order),
+            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
+        )
     }
 
-    // for experimentation purposes
-    protected fun printElementLocationAndSize(string1: String, string2: String) {
-        val element1: MobileElement = AppiumUtil.waitForElementToBeClickable(
-            getDriver(),
-            By.xpath("//*[contains(@text,'$string1')]"),
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
-            0
-        )
 
-        val element2: MobileElement = AppiumUtil.waitForElementToBeClickable(
-            getDriver(),
-            By.xpath("//*[contains(@text,'$string2')]"),
-            DEFAULT_ELEMENT_WAIT_TIME_IN_MILL,
-            0
-        )
-
-        println("Element1 '$string1': location[${element1.location}] | size[${element1.size}]")
-        println("Element1 '$string2': location[${element2.location}] | size[${element2.size}]")
+    /**
+     * returns all image elements
+     */
+    protected fun waitForImageElements(): List<MobileElement> {
+        val xpath = getSearchByImageXpath()
+        return getDriver().findElements(xpath) as List<MobileElement>
     }
 
 
