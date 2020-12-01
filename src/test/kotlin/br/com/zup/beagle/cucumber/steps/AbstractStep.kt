@@ -227,7 +227,7 @@ abstract class AbstractStep {
     protected fun isTextFieldNumeric(elementText: String): Boolean {
         val textElement = waitForElementWithValueToBeClickable(elementText, false, false)
         textElement.click()
-        sleep(1000) // TouchActions estão ocorrendo antes do elemento estar pronto para escrita
+        sleep(1000) // TouchActions sometimes get called before an element is ready to write
         if (SuiteSetup.isAndroid()) {
             var androidActions = AndroidTouchAction(getDriver())
             androidActions.press(PointOption.point(500, 1700)).release().perform() // digit 5
