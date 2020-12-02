@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-@navigation @android @ios
+@navigation @android
 Feature: Navigation Action Validation
 
     As a Beagle developer/user
