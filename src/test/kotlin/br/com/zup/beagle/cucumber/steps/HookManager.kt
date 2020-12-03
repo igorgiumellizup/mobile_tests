@@ -20,7 +20,6 @@ import br.com.zup.beagle.setup.SuiteSetup
 import io.cucumber.java.After
 import io.cucumber.java.Scenario
 import org.apache.commons.io.FileUtils
-import org.junit.AfterClass
 import org.openqa.selenium.OutputType
 import org.openqa.selenium.TakesScreenshot
 import java.io.File
@@ -31,24 +30,27 @@ import java.io.File
 class HookManager {
 
     /**
-     * Before each 'When' test
+     * Before each Scenario and its Examples
      */
     /*
     @Before
-    fun setupBeforeFeature() {
+    fun setupBeforeScenario() {
         //...
     }
     */
 
-
+    /**
+     * After each Scenario and its Examples
+     */
     @After
-    fun tearDownAfterFeature(scenario: Scenario) {
+    fun tearDownAfterScenario(scenario: Scenario) {
 
         // takes a screenshot of the screen on error
-        if (scenario.isFailed){
-            try{
+        if (scenario.isFailed) {
+            try {
                 val scrFile: File = (SuiteSetup.getDriver() as TakesScreenshot).getScreenshotAs(OutputType.FILE)
-                val destFile: File = File("${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}/ERROR-${scenario.name}-${System.currentTimeMillis()}.png")
+                val destFile: File =
+                    File("${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}/ERROR-${scenario.name}-${System.currentTimeMillis()}.png")
 
                 if (destFile.exists())
                     destFile.delete()
@@ -57,8 +59,8 @@ class HookManager {
                     scrFile,
                     destFile
                 )
-            }catch (exception: Exception){
-                //exception.printStackTrace()
+            } catch (exception: Exception) {
+                println("ERROR taking a screenshot on error: ${exception.message}")
             }
         }
 

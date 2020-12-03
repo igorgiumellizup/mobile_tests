@@ -31,20 +31,21 @@ import java.io.File
 class SuiteSetupPlugin : EventListener {
     override fun setEventPublisher(publisher: EventPublisher) {
 
-        // Similar to AfterAll
+        // works as an @AfterAll method, running once at the end of the test suite
         publisher.registerHandlerFor(
             TestRunFinished::class.java,
             EventHandler<TestRunFinished> {
                 SuiteSetup.closeDriver()
             })
 
-        // Similar to BeforeAll
+        // works as a @BeforeAll method, running once at the beginning of the test suite
         publisher.registerHandlerFor(
             TestRunStarted::class.java,
             EventHandler<TestRunStarted> { event: TestRunStarted? ->
 
                 SuiteSetup.initSuit()
 
+                // cleans screenshot temp dir
                 try {
                     val screenShotsFolder: File = File("${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}")
                     if (screenShotsFolder.exists())
