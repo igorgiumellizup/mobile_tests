@@ -51,7 +51,7 @@ class SuiteSetupPlugin : EventListener {
                     if (screenShotsFolder.exists())
                         FileUtils.cleanDirectory(screenShotsFolder!!)
                 } catch (exception: Exception) {
-                    print("ERROR cleaning screenshots folder: ${exception.message}")
+                    println("ERROR cleaning screenshots folder: ${exception.message}")
                 }
 
             })
