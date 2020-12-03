@@ -63,7 +63,7 @@ class ConfirmScreenSteps : AbstractStep() {
     @Then("^I press the confirmation (.*) button on the confirm component$")
     fun clickOnTheConfirmationActionButtonWithText(string: String) {
         // ScreenRobot().clickOnText(string)
-        waitForElementWithTextToBeClickable(string, false, false).click()
+        waitForElementWithTextToBeClickable(string, false, true).click()
     }
 
     @Then("^a confirm with a button with (.*) label should appear$")
