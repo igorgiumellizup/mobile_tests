@@ -36,12 +36,13 @@ TODO:
  - Explain how to run the iOS emulator with the app already installed
  - Explain how to obtain the iOS app URL that is set up in SuiteSetup.kt
   
-## Running
+## Execution
 
-``gradle cucumber -Dplatform=android`` (or ios)
+### Running
 
+To compile and run the whole test suite, just execute the command ``gradle cucumber -Dplatform=android`` (or ios)
 
-## Debugging
+### Debugging
 
 Debugging is possible running Cucumber as a JUnit runner. This method is recommended to avoid breakpoint skipping 
 problems during debugging a gradle task.
@@ -50,12 +51,50 @@ and select "Run Runner" (using IntelliJ IDEA). This first run will fail because 
 missing. Edit the run plan and add the following to the 'Arguments' section: -Dplatform=android (or ios).
 Now, just run \ debug the plan 
 
-## Screenshots on error
+### Screenshots on error
 
 Whenever a feature or step fails, the test suite will take a screenshot of the emulator and place it 
-in ``build/screenshots`` folder
+in ``build/screenshots`` folder. This folder is always cleaned at the project start-up
 
-## Xpath element attributes
+## Implementation guidelines
+
+### Cucumber features
+
+Features (*.feature files) are located at ``src/test/resources/features``. For now, it is mandatory that they declare 
+the ``@android`` and ``@ios`` tags.
+
+### Step implementation
+
+All step implementations must extend the ``AbstractStep.kt`` class because of framework reasons. This abstract class 
+provides business logic methods to find and manipulate elements on screen. In general, these methods allow:
+- Searching elements by its name, text or id
+- Searching elements by its name or text with a like-search flag
+- Searching elements by its name or text with a case-sensitivity flag
+- Clicking on elements
+- Sending value to text elements
+- Swiping \ scroll the screen
+- Taking screenshots
+- Telling if an element is visible and clickable
+- Telling if an element is visible and disabled
+- Telling if an element is not present on the screen
+
+### Screenshot tests
+
+Some tests rely on comparing the current app screen (screenshot) with reference images to identify if there are layout 
+or style changes. The following steps describe how to implement such tests:
+1. Register a reference image by calling the method ``registerCurrentScreenInDatabase("IMAGE-NAME")`` inside a step 
+implementation class. After the image was successfully registered in the ``screenshots-database`` folder, remove the method 
+from the step implementation class.
+2. In the step that is responsible to compare the current screenshot with the registered image, call the method 
+``Assert.assertTrue(compareCurrentScreenWithDatabase(IMAGE-NAME))``.  
+
+### Utils 
+
+The most used utils class in the project is ``AppiumUtil`` since it concentrates all the Appium operations. ``ImageUtil`` 
+is another important class and it takes care of image comparison. These util classes **must not** have business logic 
+code since they work as a lib and in the future might be exported as such.
+
+### Xpath element attributes
 
 There are [several](http://appium.io/docs/en/writing-running-appium/finding-elements/) ways to find an element 
 with Appium. It's always recommended to search by a unique identifier, for example the element's Id (ex ``driver.findElementById(...)``).
@@ -79,7 +118,7 @@ the desired attribute is showing and set with the expected value. Basically, all
 be accessible by Appium using Xpath.
 
 
-## Appium limitations
+### Appium limitations
 
 Currently, Appium does not support the following operations:
 

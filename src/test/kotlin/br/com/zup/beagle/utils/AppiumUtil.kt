@@ -16,6 +16,7 @@
 
 package br.com.zup.beagle.utils
 
+import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileDriver
 import io.appium.java_client.MobileElement
 import io.appium.java_client.android.AndroidDriver
@@ -27,8 +28,18 @@ import org.openqa.selenium.*
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.FluentWait
+import java.awt.image.BufferedImage
+import java.io.File
 import java.time.Duration
 import java.util.*
+import javax.imageio.ImageIO
+import kotlin.Array
+import kotlin.Boolean
+import kotlin.Exception
+import kotlin.IllegalArgumentException
+import kotlin.Int
+import kotlin.Long
+import kotlin.String
 
 
 object AppiumUtil {
@@ -290,7 +301,7 @@ object AppiumUtil {
 
 
     /**
-     * tries to set a value for timeoutInMilliseconds
+     * Tries to set a value for timeoutInMilliseconds
      */
     @Synchronized
     fun setElementValue(
@@ -315,7 +326,7 @@ object AppiumUtil {
     }
 
     /**
-     * returns true if element1 is above element2
+     * @return true if element1 is above element2
      */
     @Synchronized
     fun isElementAboveElement(element1: MobileElement, element2: MobileElement): Boolean {
@@ -350,5 +361,36 @@ object AppiumUtil {
         }
 
         return xpath
+    }
+
+    /**
+     * @return the current running app screenshot without the device's status and navigation bar, using
+     * @param locator to crop the screenshot
+     */
+    @Synchronized
+    fun getAppScreenshot(driver: AppiumDriver<*>, locator: By): File {
+
+        // gets the base element's position
+        val baseElement = driver.findElement(locator)
+        val baseElementLocation = baseElement.location
+        val baseElementWidth = baseElement.size.getWidth()
+        val baseElementHeight = baseElement.size.getHeight()
+
+        // takes a screenshot of the whole device screen.
+        val screenshot = (driver as TakesScreenshot).getScreenshotAs(OutputType.FILE)
+
+        // crops the image selection only the base element coordinates
+        val bufferedImage = ImageIO.read(screenshot)
+        val baseElementScreenshot: BufferedImage = bufferedImage.getSubimage(
+            baseElementLocation.getX(),
+            baseElementLocation.getY(),
+            baseElementWidth,
+            baseElementHeight
+        )
+
+        // save the cropped image overwriting the screenshot file
+        ImageIO.write(baseElementScreenshot, "png", screenshot)
+
+        return screenshot
     }
 }

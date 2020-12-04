@@ -27,6 +27,7 @@ import java.net.URL
 object SuiteSetup {
 
     const val ERROR_SCREENSHOTS_FOLDER = "./build/screenshots"
+    const val SCREENSHOTS_DATABASE_FOLDER = "./src/test/resources/screenshots_database"
     private var platform: String? = null
     private var driver: AppiumDriver<*>? = null
 

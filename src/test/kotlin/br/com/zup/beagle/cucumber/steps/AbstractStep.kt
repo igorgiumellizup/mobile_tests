@@ -20,14 +20,18 @@ import br.com.zup.beagle.screens.MainScreen
 import br.com.zup.beagle.setup.DEFAULT_ELEMENT_WAIT_TIME_IN_MILL
 import br.com.zup.beagle.setup.SuiteSetup
 import br.com.zup.beagle.utils.AppiumUtil
+import br.com.zup.beagle.utils.ImageUtil
 import br.com.zup.beagle.utils.SwipeDirection
 import io.appium.java_client.AppiumDriver
 import io.appium.java_client.MobileElement
 import io.appium.java_client.android.AndroidTouchAction
 import io.appium.java_client.ios.IOSTouchAction
 import io.appium.java_client.touch.offset.PointOption
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.FilenameUtils
 import org.openqa.selenium.By
 import org.openqa.selenium.ScreenOrientation
+import java.io.File
 
 
 abstract class AbstractStep {
@@ -250,7 +254,7 @@ abstract class AbstractStep {
     }
 
     /**
-     * waits for the image at order @order to be clickable and return it
+     * Waits for the image at order @order to be clickable and return it
      */
     protected fun waitForImageElementToBeVisible(order: Int): MobileElement {
         return AppiumUtil.waitForElementToBeClickable(
@@ -262,12 +266,67 @@ abstract class AbstractStep {
 
 
     /**
-     * returns all image elements
+     * @return all image elements
      */
     protected fun waitForImageElements(): List<MobileElement> {
         val xpath = getSearchByImageXpath()
         return getDriver().findElements(xpath) as List<MobileElement>
     }
 
+    /**
+     * Takes a screenshot of the current screen and compares it with @param imageName
+     * @return true if images are identical or false otherwise.
+     */
+    protected fun compareCurrentScreenWithDatabase(imageName: String): Boolean {
+        val databaseFile = File("${getScreenshotDatabaseFolder()}/${imageName}.png")
+        val screenshotFile = getAppScreenShot()
+        val resultFile =
+            File(
+                "${SuiteSetup.ERROR_SCREENSHOTS_FOLDER}/Comparison-" +
+                        "${FilenameUtils.removeExtension(databaseFile.name)}-${System.currentTimeMillis()}.png"
+            )
+
+        ImageUtil.compareImages(screenshotFile, databaseFile, resultFile)
+
+        // difference found
+        if (resultFile.exists()) {
+            return false
+        }
+
+        return true
+    }
+
+    /**
+     * Takes a screenshot of the current screen and saves it in the screenshot database folder with
+     * the given @param imageName.
+     */
+    protected fun registerCurrentScreenInDatabase(imageName: String) {
+        val screenshotFile = getAppScreenShot()
+        val destinationFile = File("${getScreenshotDatabaseFolder()}/${imageName}.png")
+
+        if (destinationFile.exists())
+            destinationFile.delete()
+
+        FileUtils.moveFile(
+            screenshotFile,
+            destinationFile
+        )
+    }
+
+    private fun getAppScreenShot(): File {
+        return AppiumUtil.getAppScreenshot(getDriver(), getBaseElementXpath())
+    }
+
+    // TODO: verify if base elements are always the same and not Beagle \ bff related. In this case, move this method to AppiumUtil
+    private fun getBaseElementXpath(): By {
+        return if (SuiteSetup.isAndroid()) By.id("android:id/content") else By.id("")
+    }
+
+    private fun getScreenshotDatabaseFolder(): String {
+        val imagesDbDir = if (SuiteSetup.isAndroid())
+            return SuiteSetup.SCREENSHOTS_DATABASE_FOLDER + "/android"
+        else
+            return SuiteSetup.SCREENSHOTS_DATABASE_FOLDER + "/ios"
+    }
 
 }
