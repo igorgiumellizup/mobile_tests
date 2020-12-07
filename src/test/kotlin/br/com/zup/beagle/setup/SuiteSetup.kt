@@ -91,10 +91,13 @@ object SuiteSetup {
             capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "13.4")
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 11")
             capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest")
-            capabilities.setCapability("app", "/Users/luisgustavooliveirasilva/Library/Developer/Xcode/DerivedData/Beagle-gnqdhkpaxlbwgnbcpaltnxvwyeum/Build/Products/Debug-iphonesimulator/AutomatedTests.app")
+            capabilities.setCapability(
+                "app",
+                "/Users/luisgustavooliveirasilva/Library/Developer/Xcode/DerivedData/Beagle-gnqdhkpaxlbwgnbcpaltnxvwyeum/Build/Products/Debug-iphonesimulator/AutomatedTests.app"
+            )
             capabilities.setCapability("waitForQuiescence", false)
 
-            driver = IOSDriver<MobileElement>(URL(APPIUM_URL),capabilities)
+            driver = IOSDriver<MobileElement>(URL(APPIUM_URL), capabilities)
         }
     }
 
@@ -110,9 +113,10 @@ object SuiteSetup {
     fun restartApp() {
         try {
             driver?.closeApp()
-            driver?.launchApp()
         } catch (e: Exception) {
-            println("ERROR restarting app: ${e.message}")
+            println("ERROR closing app: ${e.message}")
+        } finally {
+            driver?.launchApp()
         }
     }
 
