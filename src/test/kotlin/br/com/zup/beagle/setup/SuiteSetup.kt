@@ -75,7 +75,7 @@ object SuiteSetup {
         val capabilities = DesiredCapabilities()
 
         if (isAndroid()) {
-            capabilities.setCapability("noReset", true);
+            capabilities.setCapability("noReset", true)
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android")
             capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11")
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_3a_API_30_x86")
@@ -88,7 +88,7 @@ object SuiteSetup {
             driver = AndroidDriver<MobileElement>(/*service?.url*/URL(APPIUM_URL), capabilities)
             //driver?.launchApp()
         } else {
-            capabilities.setCapability("noReset", true);
+            capabilities.setCapability("noReset", true)
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS")
             capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "13.4")
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 11")
