@@ -24,6 +24,6 @@ Feature: Text Component Style Validation
   Background:
     Given the Beagle application did launch with the texts on the screen
 
-  Scenario: Snapshot 01
+  Scenario: TextStyle - Snapshot test 01
     Then take a screenshot and assert it is identical to the TextStyleScreen01 image
 
