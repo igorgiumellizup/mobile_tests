@@ -98,11 +98,21 @@ object SuiteSetup {
         }
     }
 
+    // Too slow on iOS
     fun resetApp() {
         try {
             driver?.resetApp();
         } catch (e: Exception) {
             println("ERROR resetting app: ${e.message}")
+        }
+    }
+
+    fun restartApp() {
+        try {
+            driver?.closeApp()
+            driver?.launchApp()
+        } catch (e: Exception) {
+            println("ERROR restarting app: ${e.message}")
         }
     }
 

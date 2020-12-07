@@ -64,6 +64,6 @@ class HookManager {
             }
         }
 
-        SuiteSetup.resetApp()
+        SuiteSetup.restartApp()
     }
 }
