@@ -314,7 +314,12 @@ abstract class AbstractStep {
     }
 
     private fun getAppScreenShot(): File {
-        return AppiumUtil.getAppScreenshot(getDriver(), getBaseElementXpath())
+        if (SuiteSetup.isAndroid()) {
+            return AppiumUtil.getAppScreenshot(getDriver(), getBaseElementXpath())
+        } else {
+            return AppiumUtil.getIosAppScreenshot(getDriver())
+        }
+
     }
 
     // TODO: verify if base elements are always the same and not Beagle \ bff related. In this case, move this method to AppiumUtil

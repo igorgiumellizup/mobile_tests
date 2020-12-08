@@ -393,4 +393,30 @@ object AppiumUtil {
 
         return screenshot
     }
+
+    /**
+     * @return the current running app screenshot without the device's status and navigation bar
+     * Device: iPhone 11
+     * macOS resolution: 2560 x 1600
+     */
+    @Synchronized
+    fun getIosAppScreenshot(driver: AppiumDriver<*>): File {
+
+        // takes a screenshot of the whole device screen.
+        val screenshot = (driver as TakesScreenshot).getScreenshotAs(OutputType.FILE)
+
+        // crops the image selection only the base element coordinates
+        val bufferedImage = ImageIO.read(screenshot)
+        val baseElementScreenshot: BufferedImage = bufferedImage.getSubimage(
+                0,
+                65,
+                828,
+                1680
+        )
+
+        // save the cropped image overwriting the screenshot file
+        ImageIO.write(baseElementScreenshot, "png", screenshot)
+
+        return screenshot
+    }
 }
