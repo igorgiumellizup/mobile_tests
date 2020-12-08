@@ -4,16 +4,15 @@ This project uses [Appium](http://appium.io/) and [Cucumber](https://cucumber.io
 
 ## Requirements before running the tests
 
-- Appium
-- Android SDK and Tools
-- iOS emulator
-
 ### Global
 
-- Appium server must be running at http://0.0.0.0:4723. Check [this guide](http://appium.io/docs/en/about-appium/getting-started/) to do so
+- Emulator (Android or iOS) must be running
+- Appium server must be running at http://0.0.0.0:4723. Check [this guide](http://appium.io/docs/en/about-appium/getting-started/) to configure the server
 - BFF must be running: ``cd beagle-backend-dir && gradlew bootRun -p automated-tests``
 
 ### Android
+
+Install Android SDK and Tools. Variable [ANDROID_SDK_ROOT](https://developer.android.com/studio/command-line/variables)  must be configured
 
 This project uses a different version of the automated-tests app. The new app has 
 a main screen activity that takes a BFF URL and loads the requestd bff end-point. This was necessary because 
@@ -29,6 +28,8 @@ Example in Windows: ``C:\Users\YOUR-USER\AppData\Local\Android\Sdk\emulator\emul
 The emulator must be running before running the tests
  
 ### iOS (in progress...)
+
+Install iOS emulator.
 
 Just like the Android section description and for the same reasons, this project also uses a custom test app for iOS. 
 The custom app can be found in the same branch described in the Android section. 
