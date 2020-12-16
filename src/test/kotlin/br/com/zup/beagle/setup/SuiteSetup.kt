@@ -75,14 +75,44 @@ object SuiteSetup {
         val capabilities = DesiredCapabilities()
 
         if (isAndroid()) {
+
+            /**
+             * Reset strategies
+             * http://appium.io/docs/en/writing-running-appium/other/reset-strategies/index.html
+             */
             capabilities.setCapability("noReset", true)
+
+            /**
+             * Device & platform
+             */
             capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android")
             capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11")
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_3a_API_30_x86")
+
+            /**
+             * When the .apk being tested is build as test-only (ex when it is created by running on Android Studio)
+             * https://github.com/appium/appium/issues/10758
+             * https://stackoverflow.com/questions/25274296/adb-install-fails-with-install-failed-test-only
+             */
+            capabilities.setCapability("allowTestPackages", true)
+
+            /**
+             * Android driver strategy: UiAutomator2 or Espresso
+             */
+
             capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2")
-            // MobileCapabilityType.APP capability is not required for Android if you specify appPackage and appActivity
-            // In this case, the Android image already contains the app
-            capabilities.setCapability("appPackage", "br.com.zup.beagle.automatedTests")
+
+            // Espresso driver config. It is mandatory to set the app capability when using Espresso driver
+            //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Espresso")
+            //capabilities.setCapability("forceEspressoRebuild", true)
+            //capabilities.setCapability(MobileCapabilityType.APP, "C:\\workspaces\\beagle\\android\\automated-tests\\build\\outputs\\apk\\debug\\automated-tests-debug.apk");
+
+            /**
+             *
+             * MobileCapabilityType.APP capability is not required for Android if you specify appPackage and appActivity
+             * In this case, the Android image already contains the app
+             */
+            capabilities.setCapability("appPackage", "br.com.zup.beagle.appiumApp")
             capabilities.setCapability("appActivity", ".activity.MainActivity")
 
             driver = AndroidDriver<MobileElement>(/*service?.url*/URL(APPIUM_URL), capabilities)
@@ -94,7 +124,7 @@ object SuiteSetup {
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 11")
             capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest")
             capabilities.setCapability(
-                "app",
+                MobileCapabilityType.APP,
                 "/Users/luisgustavooliveirasilva/Library/Developer/Xcode/DerivedData/Beagle-gnqdhkpaxlbwgnbcpaltnxvwyeum/Build/Products/Debug-iphonesimulator/AutomatedTests.app"
             )
             capabilities.setCapability("waitForQuiescence", false)
