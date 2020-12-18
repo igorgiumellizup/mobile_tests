@@ -1,3 +1,6 @@
+
+# MOVED TO https://github.com/ZupIT/beagle/tree/feature/beagle_appium_app/tests/appium/project
+
 # Beagle mobile tests
 
 This project uses [Appium](http://appium.io/) and [Cucumber](https://cucumber.io/) frameworks to run both Android and iOS user interface tests
